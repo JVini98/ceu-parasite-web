@@ -22,6 +22,7 @@ from . import settings
 
 urlpatterns = [
     path('', include('uploads.urls')),
+    path('game/', include('game.urls')),
     path('admin/', admin.site.urls),
 ]
 
