@@ -2,18 +2,28 @@
 <html>
   <head>
     <title>Parasites game</title>
-    <link rel="stylesheet" href="../static/css/canvas.css" />
+    <!-- cropper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <!-- custom css-->
+    <link rel="stylesheet" href="../static/css/crop.css">
   </head>
   <body>
     <h1>Identify the parasites</h1>
     <!-- Change width and height according to image size (zoom?) -->
-    <canvas id="myCanvas" width="918" height="1632">
+    
+    <!--<canvas id="myCanvas" width="918" height="1632">
       Your browser does not support the HTML canvas tag.
     </canvas>
+    -->
+
+    <div>
+      <img id="gameImage" src="../static/images/ameba.jpg" width="918" height="1632">
+    </div>
 
     <script
       type="text/javascript"
-      src="../static/javascripts/canvas.js"
+      src="../static/javascripts/crop.js"
     ></script>
   </body>
 </html>
