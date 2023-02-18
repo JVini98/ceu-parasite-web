@@ -9,6 +9,7 @@ const image = document.getElementById('gameImage');
 
 const cropper = new Cropper(image, {
   aspectRatio: 16 / 9,
+  
   crop(event) {
     console.log(event.detail.x);
     console.log(event.detail.y);
