@@ -12,21 +12,14 @@
   </head>
   <body>
     <h1>Identify the parasites</h1>
-    <!-- Change width and height according to image size (zoom?) -->
     
-    <!--<canvas id="myCanvas" width="918" height="1632">
-      Your browser does not support the HTML canvas tag.
-    </canvas>
-    -->
-
+    <div id="message"></div>
     <div id="imageContainer">
       <img id="gameImage" src={{image.file.url}} width="229.5px" height="408px">
     </div>
     <button id="cropButton" type="submit">Found!</button>
 
-    <script
-      type="text/javascript"
-      src="../static/javascripts/crop.js"
-    ></script>
+    <!-- custom JS-->
+    <script type="text/javascript" src="../static/javascripts/crop.js"></script>
   </body>
 </html>
