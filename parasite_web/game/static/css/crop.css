@@ -7,7 +7,12 @@
     display: block;
 }*/
 
+#imageContainer{
+    margin-bottom: 15px;
+}
+
 #gameImage {
     display: block;
     max-width: 100%;
 }
+
