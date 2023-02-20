@@ -6,8 +6,9 @@ from .models import CroppedImage
 # Create your views here.
 def manipulateImage(request):
     image = CroppedImage.objects.get(pk=2)
-    template = loader.get_template('game.html')
+    '''template = loader.get_template('game.html')
     context = {
         'image': image,
     }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))'''
+    return render(request=request, template_name="game.html", context={'image': image})
