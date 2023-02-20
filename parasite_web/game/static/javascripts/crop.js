@@ -6,6 +6,9 @@ img.src = "../static/images/ameba.jpg";
 ctx.drawImage(img, 0, 0, canvas.width, canvas.height); */
 
 const image = document.getElementById('gameImage');
+const button = document.getElementById('cropButton');
+const parasites = document.getElementById('parasites');
+//const csrf = document.getElementsByName('csrfmiddlewaretoken');
 
 const cropper = new Cropper(image, {
   aspectRatio: 16 / 9,
@@ -20,3 +23,31 @@ const cropper = new Cropper(image, {
     console.log(event.detail.scaleY);
   },
 });
+
+button.addEventListener('click', ()=>{
+  cropper.getCroppedCanvas().toBlob((blob) => {
+
+    const url = URL.createObjectURL(blob);
+    parasites.innerHTML = `<image src="${url}" width="150px" class="margin"/>`;
+
+
+    /**const formData = new FormData();
+  
+    formData.append('csrfmiddlewaretoken', csrf[0].value)
+    formData.append('croppedImage', blob, 'example.png' );
+  
+    $.ajax('/media/images', {
+      method: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success() {
+        console.log('Upload success');
+      },
+      error() {
+        console.log('Upload error');
+      },
+    });*/
+  });
+});
+

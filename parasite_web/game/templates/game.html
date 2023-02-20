@@ -12,12 +12,13 @@
   </head>
   <body>
     <h1>Identify the parasites</h1>
-    
     <div id="message"></div>
     <div id="imageContainer">
       <img id="gameImage" src={{image.file.url}} width="229.5px" height="408px">
+      <!--{% csrf_token %}-->
     </div>
     <button id="cropButton" type="submit">Found!</button>
+    <div id="parasites"></div>
 
     <!-- custom JS-->
     <script type="text/javascript" src="../static/javascripts/crop.js"></script>
