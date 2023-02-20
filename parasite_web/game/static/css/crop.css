@@ -1,0 +1,22 @@
+/*#myCanvas{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}*/
+
+#imageContainer{
+    margin-bottom: 15px;
+}
+
+#gameImage {
+    display: block;
+    max-width: 100%;
+}
+
+.margin{
+    margin-top:15px;
+    margin-bottom: 15px;
+}
