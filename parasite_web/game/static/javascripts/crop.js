@@ -1,7 +1,8 @@
 const image = document.getElementById('gameImage');
-const button = document.getElementById('cropButton');
+const buttonCrop = document.getElementById('cropButton');
+const buttonSave = document.getElementById('saveButton');
 const parasitesForm = document.getElementById('parasitesForm');
-//const csrf = document.getElementsByName('csrfmiddlewaretoken');
+let url;
 
 const cropper = new Cropper(image, {
   aspectRatio: 16 / 9,
@@ -17,30 +18,14 @@ const cropper = new Cropper(image, {
   },
 });
 
-button.addEventListener('click', ()=>{
+buttonCrop.addEventListener('click', ()=>{
   cropper.getCroppedCanvas().toBlob((blob) => {
-
-    const url = URL.createObjectURL(blob);
+    url = URL.createObjectURL(blob);
     parasitesForm.innerHTML = `<image src="${url}" width="150px" class="imageCentered marginBotton"/>`;
-
-
-    /**const formData = new FormData();
-  
-    formData.append('csrfmiddlewaretoken', csrf[0].value)
-    formData.append('croppedImage', blob, 'example.png' );
-  
-    $.ajax('/media/images', {
-      method: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success() {
-        console.log('Upload success');
-      },
-      error() {
-        console.log('Upload error');
-      },
-    });*/
   });
+});
+
+buttonSave.addEventListener('click', ()=>{
+  parasitesResponse.innerHTML = `<image src="${url}" width="150px" class="margin"/>`;
 });
 
