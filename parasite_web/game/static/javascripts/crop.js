@@ -2,6 +2,7 @@ const image = document.getElementById('gameImage');
 const buttonCrop = document.getElementById('cropButton');
 const buttonSave = document.getElementById('saveButton');
 const parasitesForm = document.getElementById('parasitesForm');
+const annotation = document.getElementById('annotation');
 let url;
 
 const cropper = new Cropper(image, {
@@ -29,3 +30,12 @@ buttonSave.addEventListener('click', ()=>{
   parasitesResponse.innerHTML = `<image src="${url}" width="150px" class="margin"/>`;
 });
 
+buttonSave.disabled=true;
+
+annotation.addEventListener("input", ()=>{
+  if (annotation.value === "") {
+    buttonSave.disabled = true; 
+  } else {
+    buttonSave.disabled = false; 
+  }
+});
