@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html [lang="en"]>
   <head>
     <title>Parasites game</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Parasites application">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Pyhton, Django">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="../static/images/favicon.png">
     <!-- cropper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
@@ -14,10 +21,10 @@
     <h1>Identify the parasites</h1>
     <div id="message"></div>
     <div id="imageContainer">
-      <img id="gameImage" src={{image.file.url}} width="229.5px" height="408px">
+      <img id="gameImage" src={{image.file.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
       <!--{% csrf_token %}-->
     </div>
-    <button id="cropButton" type="submit">Found!</button>
+    <button id="cropButton" type="button">Found!</button>
     <div id="parasites"></div>
 
     <!-- custom JS -->
