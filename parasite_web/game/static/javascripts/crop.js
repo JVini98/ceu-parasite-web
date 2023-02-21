@@ -1,6 +1,6 @@
 const image = document.getElementById('gameImage');
 const button = document.getElementById('cropButton');
-const parasites = document.getElementById('parasites');
+const parasitesForm = document.getElementById('parasitesForm');
 //const csrf = document.getElementsByName('csrfmiddlewaretoken');
 
 const cropper = new Cropper(image, {
@@ -21,7 +21,7 @@ button.addEventListener('click', ()=>{
   cropper.getCroppedCanvas().toBlob((blob) => {
 
     const url = URL.createObjectURL(blob);
-    parasites.innerHTML = `<image src="${url}" width="150px" class="margin"/>`;
+    parasitesForm.innerHTML = `<image src="${url}" width="150px" class="imageCentered marginBotton"/>`;
 
 
     /**const formData = new FormData();
