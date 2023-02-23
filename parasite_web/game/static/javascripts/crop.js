@@ -34,7 +34,7 @@ buttonCrop.addEventListener('click', ()=>{
 // temporary save image on click
 buttonSave.addEventListener('click', ()=>{
   annotationSave = annotationForm.value;
-  parasitesResponse.innerHTML = `<image src="${url}" width="150px" class="margin"/>
+  parasitesResponse.innerHTML += `<image src="${url}" width="150px" class="margin"/>
                                  <p>${annotationSave}</p>
                                  <p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}`;
   annotationForm.value="";
