@@ -44,7 +44,7 @@ buttonSave.addEventListener('click', ()=>{
 buttonSave.disabled=true;
 
 annotationForm.addEventListener("input", ()=>{
-  if (annotationForm.value === "") {
+  if (annotationForm.value === "" || annotationForm.value === " ") {
     buttonSave.disabled = true; 
   } else {
     buttonSave.disabled = false; 
