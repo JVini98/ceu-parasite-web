@@ -1,13 +1,17 @@
 const image = document.getElementById('gameImage');
 const buttonCrop = document.getElementById('cropButton');
 const buttonSave = document.getElementById('saveButton');
+const buttonSend = document.getElementById('sendButton');
 const parasitesForm = document.getElementById('parasitesForm');
+const parasitesResponse = document.getElementById('parasitesResponse');
 const annotationForm = document.getElementById('annotation');
 
 let url;
 let imagePosition;
 let annotationSave;
+let JSON;
 
+// cropper properties
 const cropper = new Cropper(image, {
   aspectRatio: 16 / 9,
   
@@ -34,10 +38,11 @@ buttonCrop.addEventListener('click', ()=>{
 // temporary save image on click
 buttonSave.addEventListener('click', ()=>{
   annotationSave = annotationForm.value;
-  parasitesResponse.innerHTML += `<image src="${url}" width="150px" class="margin"/>
-                                 <p>${annotationSave}</p>
-                                 <p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}`;
+  parasitesResponse.innerHTML += `<image src="${url}" width="150px" class="margin"/>`
+                               + `<p>${annotationSave}</p>`
+                               + `<p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}`;
   annotationForm.value="";
+  showbuttonSave(parasitesResponse.innerHTML);
 });
 
 // change state button according to input value
@@ -50,3 +55,10 @@ annotationForm.addEventListener("input", ()=>{
     buttonSave.disabled = false; 
   }
 });
+
+// control of sending data to the server
+buttonSend.style.visibility = 'hidden';
+
+function showbuttonSave(parasitesList){
+  if (parasitesList !== "") buttonSend.style.visibility = 'visible';
+}
