@@ -9,7 +9,7 @@ const annotationForm = document.getElementById('annotation');
 let url;
 let imagePosition;
 let annotationSave;
-let JSON;
+let parasitesList = [];
 
 // cropper properties
 const cropper = new Cropper(image, {
@@ -40,10 +40,23 @@ buttonSave.addEventListener('click', ()=>{
   annotationSave = annotationForm.value;
   parasitesResponse.innerHTML += `<image src="${url}" width="150px" class="margin"/>`
                                + `<p>${annotationSave}</p>`
-                               + `<p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}`;
+                               // + `<p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}
+  parasitesList.push(createParasiteObj(annotationSave, imagePosition.x, imagePosition.y, imagePosition.width, imagePosition.height));
   annotationForm.value="";
   showbuttonSave(parasitesResponse.innerHTML);
 });
+
+// create parasite object
+function createParasiteObj(pAnnotation, pCoordX, pCoordY, pWidth, pHeight){
+  let parasite = {};
+  parasite.url = image.src;
+  parasite.annotation = pAnnotation;
+  parasite.coordinateX = pCoordX;
+  parasite.coordinateY = pCoordY;
+  parasite.width = pWidth;
+  parasite.height = pHeight;
+  return parasite;
+}
 
 // change state button according to input value
 buttonSave.disabled=true;
@@ -59,6 +72,13 @@ annotationForm.addEventListener("input", ()=>{
 // control of sending data to the server
 buttonSend.style.visibility = 'hidden';
 
-function showbuttonSave(parasitesList){
-  if (parasitesList !== "") buttonSend.style.visibility = 'visible';
+function showbuttonSave(parasitesSelected){
+  if (parasitesSelected !== "") buttonSend.style.visibility = 'visible';
 }
+
+// generate JSON
+buttonSend.addEventListener('click', ()=>{
+  console.log(JSON.stringify(parasitesList));
+});
+
+
