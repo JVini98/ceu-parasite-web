@@ -3,8 +3,10 @@ const buttonCrop = document.getElementById('cropButton');
 const buttonSave = document.getElementById('saveButton');
 const buttonSend = document.getElementById('sendButton');
 const parasitesForm = document.getElementById('parasitesForm');
+const jsonForm = document.getElementById('jsonForm');
 const parasitesResponse = document.getElementById('parasitesResponse');
 const annotationForm = document.getElementById('annotation');
+const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
 let url;
 let imagePosition;
@@ -76,9 +78,32 @@ function showbuttonSave(parasitesSelected){
   if (parasitesSelected !== "") buttonSend.style.visibility = 'visible';
 }
 
-// generate JSON
+// generate and send JSON
 buttonSend.addEventListener('click', ()=>{
-  console.log(JSON.stringify(parasitesList));
+  let json = JSON.stringify(parasitesList)
+  console.log("Antes de entrar en Ajax" + json);
+  
+  $(document).ready(function () {
+      var formData = new FormData();
+      formData.append('csrfmiddlewaretoken', csrf[0].value);
+      formData.append('file', json);
+  
+      $.ajax({
+          url: jsonForm.action,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+              console.log("AJAX: " + response);
+          },
+          error: function (error) {
+            console.log(error);
+          }
+      });
+  });
 });
+  
+
 
 
