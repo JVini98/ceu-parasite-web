@@ -81,7 +81,6 @@ function showbuttonSave(parasitesSelected){
 // generate and send JSON
 buttonSend.addEventListener('click', ()=>{
   let json = JSON.stringify(parasitesList)
-  console.log("Antes de entrar en Ajax" + json);
   
   $(document).ready(function () {
       var formData = new FormData();
@@ -92,7 +91,6 @@ buttonSend.addEventListener('click', ()=>{
           url: jsonForm.action,
           method: "POST",
           data: formData,
-          enctype: "multipart/form-data",
           processData: false,
           contentType: false,
           success: function (response) {
