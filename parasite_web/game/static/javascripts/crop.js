@@ -86,12 +86,13 @@ buttonSend.addEventListener('click', ()=>{
   $(document).ready(function () {
       var formData = new FormData();
       formData.append('csrfmiddlewaretoken', csrf[0].value);
-      formData.append('file', json);
+      formData.append('json', json);
   
       $.ajax({
           url: jsonForm.action,
-          type: "POST",
+          method: "POST",
           data: formData,
+          enctype: "multipart/form-data",
           processData: false,
           contentType: false,
           success: function (response) {
