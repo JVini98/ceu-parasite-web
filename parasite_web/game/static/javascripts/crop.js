@@ -3,8 +3,11 @@ const buttonCrop = document.getElementById('cropButton');
 const buttonSave = document.getElementById('saveButton');
 const buttonSend = document.getElementById('sendButton');
 const parasitesForm = document.getElementById('parasitesForm');
+const jsonForm = document.getElementById('jsonForm');
 const parasitesResponse = document.getElementById('parasitesResponse');
 const annotationForm = document.getElementById('annotation');
+const alertBox = document.getElementById('alertBox');
+const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
 let url;
 let imagePosition;
@@ -76,9 +79,39 @@ function showbuttonSave(parasitesSelected){
   if (parasitesSelected !== "") buttonSend.style.visibility = 'visible';
 }
 
-// generate JSON
+// generate and send JSON
 buttonSend.addEventListener('click', ()=>{
-  console.log(JSON.stringify(parasitesList));
+  let json = JSON.stringify(parasitesList)
+  
+  $(document).ready(function () {
+      var formData = new FormData();
+      formData.append('csrfmiddlewaretoken', csrf[0].value);
+      formData.append('json', json);
+  
+      $.ajax({
+          url: jsonForm.action,
+          method: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            console.log(response);
+            alertBox.innerHTML = `<div id="alertBox" class="alert alert-success" role="alert">${response["message"]}</div>`;
+            // reload page to display another image
+            setTimeout(function(){
+              window.location.reload();
+            }, 3000);
+          },
+          error: function (error) {
+            console.log(error);
+            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">${error}</div>`;
+          }
+      });
+  });
 });
+
+
+  
+
 
 
