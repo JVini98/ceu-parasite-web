@@ -1,0 +1,48 @@
+En una máquina ubuntu: 
+
+Pyhton3: 
+sudo apt install python3 --> instalar python3
+python3 --version --> comprobar que se ha instalado
+
+Gestor de paquetes de Python: 
+sudo apt install python3-pip --> instalar pip (gestor de paquetes de Python3)
+pip --version --> comprobar que se ha instalado
+
+Anaconda (tener entornos aislados): 
+Descargar el instaldor del link: https://www.anaconda.com/products/distribution
+Darle permisos de ejecución: chmod +x ANACONDA
+
+Extra Tutorial de conda: https://conda.io/projects/conda/en/latest/user-guide/getting-started.html
+Crear un entorno: conda create --name NOMBRE
+Ver entornos disponibles: conda info --envs
+Seleccionar entorno: conda activate snowflakes
+Listar los paquetes de un entorno: conda list
+Borrar un entorno de conda: conda env remove -n snowflakes
+
+Django: 
+Instalar Django desde conda: conda install django
+Comprobar que se ha instalado: django-admin --version
+Instalar Numpy: conda install numpy
+Instalar Pillow (PIL): conda install pillow
+
+Crear un nuevo proyecto: django-admin startproject NOMBRE
+Ejecutar un proyecto: python manage.py runserver y http://127.0.0.1:8000/
+Crear una aplicación: python manage.py startapp NOMBRE
+Ejecutar una migración: python manage.py migrate
+Crear una migración: python manage.py makemigrations NOMBRE
+Ver SQL generado: py manage.py sqlmigrate NOMBRE NUMERO_MIGRACION
+Abrir un terminal: python manage.py shell
+Crear un superusuario: py manage.py createsuperuser
+Añadir una carpeta dentro de la aplicación para contenido estático: static
+Incluirlo en el template: {% load static %}
+
+MySQL: 
+Instalar el cliente: conda install mysqlclient
+Instalar servidor: sudo apt install mysql-server
+
+Migrar: 
+Guardar información: python parasite_web/manage.py dumpdata > datadump.json
+Crear una migración: python parasite_web/manage.py makemigrations
+Ejecutar la migración: python parasite_web/manage.py migrations
+Comprobar DB: python parasite_web/manage.py dbshell y acceder a la DB
+Cargar los datos: python parasite_web/manage.py loaddata datadump.json
