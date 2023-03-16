@@ -7,9 +7,9 @@ from .models import ParasiteImage
 class ParasiteImageForm(forms.ModelForm):
     class Meta:
         model = ParasiteImage
-        fields = ['image']
+        fields = ['path']
         labels = {
-            "image": ""
+            "path": ""
         }
     
     # def __init__(self, *args, **kwargs):

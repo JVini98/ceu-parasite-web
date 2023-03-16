@@ -17,7 +17,7 @@ def upload_file(request):
         form = ParasiteImageForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             parasite_img_model: ParasiteImage = form.save()
-            parasite_img = Image.open(parasite_img_model.image)
+            parasite_img = Image.open(parasite_img_model.path)
             annotated_img = annotate_parasites(parasite_img)
             return render(request=request, template_name="uploads/show.html", context={"img_uri": to_data_uri(annotated_img)})
     else:
