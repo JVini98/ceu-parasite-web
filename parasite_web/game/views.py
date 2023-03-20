@@ -26,5 +26,5 @@ def manipulateImage(request):
             return JsonResponse({'message': "Successfully sent to the server"})
     else:
         image = Photograph.objects.get(pk=4)
-        parasites = Parasite.objects.values_list('name')
+        parasites = Parasite.objects.values_list('name', flat=True)
         return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})

@@ -42,7 +42,7 @@
               <!-- <input id="annotation" type="text" placeholder="Ameba" required>-->
               <select id="annotation" name="parasites">
               {% for parasite in parasites %}
-                <option value="{{parasite}}">{{ parasite }}</option>
+                <option value="{{parasite|safe}}">{{ parasite|safe }}</option>
               {% endfor %}
               </select>
             </form>
