@@ -1,12 +1,12 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
-from .models import ParasiteImage
+from .models import Photograph
 
 
-class ParasiteImageForm(forms.ModelForm):
+class PhotographForm(forms.ModelForm):
     class Meta:
-        model = ParasiteImage
+        model = Photograph
         fields = ['path']
         labels = {
             "path": ""

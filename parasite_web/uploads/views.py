@@ -7,21 +7,21 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from PIL import Image, ImageDraw
 
-from .forms import ParasiteImageForm
-from .models import ParasiteImage
+from .forms import PhotographForm
+from .models import Photograph
 
 
 # TODO: raises ValueError("not enough image data") with small images
 def upload_file(request):
     if request.method == "POST":
-        form = ParasiteImageForm(data=request.POST, files=request.FILES)
+        form = PhotographForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            parasite_img_model: ParasiteImage = form.save()
+            parasite_img_model: Photograph = form.save()
             parasite_img = Image.open(parasite_img_model.path)
             annotated_img = annotate_parasites(parasite_img)
             return render(request=request, template_name="uploads/show.html", context={"img_uri": to_data_uri(annotated_img)})
     else:
-        form = ParasiteImageForm()
+        form = PhotographForm()
         return render(request=request, template_name="uploads/form.html", context={'form': form})
 
 
