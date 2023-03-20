@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import ParasiteImage
+from .models import Photograph
 
-admin.site.register(ParasiteImage)
+admin.site.register(Photograph)

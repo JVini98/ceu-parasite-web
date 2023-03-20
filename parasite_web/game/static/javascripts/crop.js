@@ -45,7 +45,6 @@ buttonSave.addEventListener('click', ()=>{
                                + `<p>${annotationSave}</p>`
                                // + `<p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}
   parasitesList.push(createParasiteObj(annotationSave, imagePosition.x, imagePosition.y, imagePosition.width, imagePosition.height));
-  annotationForm.value="";
   showbuttonSave(parasitesResponse.innerHTML);
 });
 
@@ -60,17 +59,6 @@ function createParasiteObj(pAnnotation, pCoordX, pCoordY, pWidth, pHeight){
   parasite.height = pHeight;
   return parasite;
 }
-
-// change state button according to input value
-buttonSave.disabled=true;
-
-annotationForm.addEventListener("input", ()=>{
-  if (annotationForm.value === "" || annotationForm.value === " ") {
-    buttonSave.disabled = true; 
-  } else {
-    buttonSave.disabled = false; 
-  }
-});
 
 // control of sending data to the server
 buttonSend.style.visibility = 'hidden';

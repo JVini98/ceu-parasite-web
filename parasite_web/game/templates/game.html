@@ -24,7 +24,7 @@
     <h1>Identify the parasites</h1>
     <div id="alertBox"></div>
     <div id="imageContainer" class="marginBotton">
-      <img id="gameImage" src={{image.file.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
+      <img id="gameImage" src={{image.path.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
     </div>
     <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Found!</button>
     <div class="modal fade" id="myModal" role="dialog">
@@ -39,7 +39,12 @@
             <form id="annotationForm" action="">
               <div id="parasitesForm"></div>
               <label for="annotation" form="annotationForm">What parasite is it?</label>
-              <input id="annotation" type="text" placeholder="Ameba" required>
+              <!-- <input id="annotation" type="text" placeholder="Ameba" required>-->
+              <select id="annotation" name="parasites">
+              {% for parasite in parasites %}
+                <option value="{{parasite|safe}}">{{ parasite|safe }}</option>
+              {% endfor %}
+              </select>
             </form>
           </div>
           <div class="modal-footer">

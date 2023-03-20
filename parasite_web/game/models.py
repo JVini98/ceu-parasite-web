@@ -1,9 +1,26 @@
 from django.db import models
+from uploads.models import Photograph, Parasite, User
+
 
 # Create your models here.
-class CroppedImage(models.Model):
-    file = models.ImageField(upload_to='images')
-    uploaded = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.pk)
+class Identification(models.Model):
+    coordinateX = models.CharField(max_length=20)
+    coordinateY = models.CharField(max_length=20)
+    width = models.CharField(max_length=20)
+    height = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    photograph = models.ForeignKey(Photograph, on_delete=models.CASCADE)
+    parasite = models.ForeignKey(Parasite, on_delete=models.CASCADE)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 
+                                            'photograph', 
+                                            'parasite', 
+                                            'coordinateX', 
+                                            'coordinateY', 
+                                            'width', 
+                                            'height'
+                                            ], name='unique_indetification')
+        ]
