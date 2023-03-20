@@ -6,6 +6,9 @@ from .models import Identification
 import json
 
 # Create your views here.
+def retrieveIdParasite(nameSelected):
+    return Parasite.objects.get(name=nameSelected)
+
 def manipulateImage(request):
     if request.method == "POST":
         jsonReceived = request.POST.get('json')
@@ -19,8 +22,7 @@ def manipulateImage(request):
                                                 height=dict["height"], 
                                                 user=User.objects.get(pk=1),
                                                 photograph=Photograph.objects.get(pk=4),
-                                                #parasite=dict["annotation"]
-                                                parasite=Parasite.objects.get(pk=17)
+                                                parasite=retrieveIdParasite(dict["annotation"])
                                                 )
                 identification.save()
             return JsonResponse({'message': "Successfully sent to the server"})
