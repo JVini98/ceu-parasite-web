@@ -34,5 +34,8 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
 
+    def __str__(self):
+        return str(self.pk)
+
 if (not User.objects.exists()):
     User(name="Patricia", surname1="Herrera", surname2="", email="patricia@gmail.com", password="patricia1234").save()
