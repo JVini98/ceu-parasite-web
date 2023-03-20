@@ -39,7 +39,12 @@
             <form id="annotationForm" action="">
               <div id="parasitesForm"></div>
               <label for="annotation" form="annotationForm">What parasite is it?</label>
-              <input id="annotation" type="text" placeholder="Ameba" required>
+              <!-- <input id="annotation" type="text" placeholder="Ameba" required>-->
+              <select id="annotation" name="parasites">
+              {% for parasite in parasites %}
+                <option value="{{parasite}}">{{ parasite }}</option>
+              {% endfor %}
+              </select>
             </form>
           </div>
           <div class="modal-footer">
