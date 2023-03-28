@@ -3,7 +3,7 @@ GLOBAL
 ##############*/
 
 *{
-    margin: 0;
+    /* margin:0; */
     padding: 0;
     box-sizing: border-box;
 }
@@ -48,7 +48,7 @@ html{
 }
 
 .spacer > *{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .line::after{
@@ -154,7 +154,7 @@ LOGIN
     cursor: pointer;
     width: 90%;
     transform: translate(+5%, -5%);
-    margin-top: 50px;
+    margin-top: 15px;
 }
 
 .submit:hover{
@@ -183,7 +183,7 @@ LOGIN
 }
 
 .card{
-  margin-block: -20px;
+  margin-block: -20px; /* arreglar el padding con mensajes de abajo*/
 }
 
 /*####################

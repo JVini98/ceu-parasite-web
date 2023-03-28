@@ -22,7 +22,7 @@
 
     <div class="container">
         <div class="card center spacer">
-            <h1 class="title text-center">Register With</h1>
+            <h1 class="title text-center">Welcome to registration</h1>
             <div class="social-login">
                 <button class="social-btn">
                     <img class="icon" src="../static/images/gmail.svg" alt="gmail icon">
@@ -34,22 +34,27 @@
                 </button>
             </div>
             <div class="text-center line form-divider">or</div>
-            <form method="get" class="login-form spacer" id="signup-form">
+            <form method="post" action="." id="signup-form" class="login-form spacer">
+                {% csrf_token %}
                 <div class="input-group">
-                    <img class="icon input-icon" src="../static/images/profile-user.svg" alt="">
-                    <input required name="username" id="username" type="text" class="form-input" placeholder="john doe" maxlength="16" minlength="6">
+                    <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
+                    {{form.first_name}}
                 </div>
                 <div class="input-group">
-                    <img class="icon input-icon" src="../static/images/envelope.png" alt="">
-                    <input required name="email" id="email" type="email" class="form-input" placeholder="johndoe@mail.com">
+                    <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
+                    {{form.last_name}}
                 </div>
                 <div class="input-group">
-                    <img class="icon input-icon" src="../static/images/key.svg" alt="">
-                    <input required name="password1" id="password1" type="password" class="form-input" placeholder="password" maxlength="22" minlength="8">
+                    <img class="icon input-icon" src="../static/images/envelope.png" alt="Email icon">
+                    {{ form.email }}
                 </div>
                 <div class="input-group">
-                    <img class="icon input-icon" src="../static/images/key.svg" alt="">
-                    <input required name="password2" id="password2" type="password" class="form-input" placeholder=" confirm password" maxlength="22" minlength="8">
+                    <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
+                    {{ form.password1 }}
+                </div>
+                <div class="input-group">
+                    <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
+                    {{ form.password2 }}
                 </div>
                 <input type="submit" class="submit" value="Signup">
             </form>
