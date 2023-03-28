@@ -23,6 +23,7 @@ from . import settings
 urlpatterns = [
     path('', include('uploads.urls')),
     path('game/', include('game.urls')),
+    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
 ]
 
