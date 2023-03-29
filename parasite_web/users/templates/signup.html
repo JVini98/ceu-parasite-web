@@ -23,7 +23,7 @@
     <div class="container">
         <div class="card center spacer">
             <h1 class="title text-center">Welcome to registration</h1>
-            <div class="social-login">
+            <!--div class="social-login">
                 <button class="social-btn">
                     <img class="icon" src="../static/images/gmail.svg" alt="gmail icon">
                     Gmail
@@ -33,27 +33,40 @@
                     Facebook
                 </button>
             </div>
-            <div class="text-center line form-divider">or</div>
+            <div class="text-center line form-divider">or</div-->
             <form method="post" action="." id="signup-form" class="login-form spacer">
                 {% csrf_token %}
+                <!--div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
+                      </span>
+                    </div>
+                    {{form.first_name}}
+                </div-->
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
+                    <label for="first_name" form="signup-form">Your first name:</label>
                     {{form.first_name}}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
+                    <label for="last_name" form="signup-form">Your last name:</label>
                     {{form.last_name}}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/envelope.png" alt="Email icon">
+                    <label for="email" form="signup-form">Your email:</label>
                     {{ form.email }}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
+                    <label for="password1" form="signup-form">Your password:</label>
                     {{ form.password1 }}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
+                    <label for="password2" form="signup-form" class="label">Confirm your password:</label>
                     {{ form.password2 }}
                 </div>
                 <input type="submit" class="submit" value="Signup">

@@ -3,7 +3,7 @@ GLOBAL
 ##############*/
 
 *{
-    /* margin:0; */
+    margin:0;
     padding: 0;
     box-sizing: border-box;
 }
@@ -12,7 +12,7 @@ GLOBAL
     --bl-color:#171717;
     --blue-color: #203bd4;
     --lt-color:#EDEDED;
-    --text-fs: 16px;
+    --text-fs: 8px;
     --title-fs: 34px;
 }
 
@@ -23,7 +23,7 @@ html{
 
 
 .container{
-    width: 80%;
+    width: 90%;
     margin: auto;
 }
 
@@ -36,11 +36,11 @@ html{
 
 .card{
     border-radius: 10px;
-    box-shadow: 0 0 20px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px 20px rgba(0,0,0,0.1);
     transition: all 0.3s ease-in-out;
-    width: 50%;
+    width: 55%;
     min-width: 320px;
-    padding: 10%;
+    padding: 5%;
 }
 
 .text-center{
@@ -84,8 +84,8 @@ LOGIN
 
 .title{
     font-size: calc(var(--title-fs) + 6 * ((100vw - 320px) / 680));
-    text-transform: uppercase;
-    margin-bottom: 30px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .social-login{
@@ -125,7 +125,7 @@ LOGIN
     padding: 10px;
     width: 100%;
     border-radius: 10px;
-    text-indent: 15%;
+    text-indent: 10%;
 }
 
 .form-input:hover, .form-input:focus{
@@ -139,8 +139,8 @@ LOGIN
 
 .input-icon{
     position: absolute;
-    left: 5%;
-    top: 50%;
+    left: 3%;
+    top: 65%;
     transform: translateY(-50%);
 }
 
@@ -180,6 +180,7 @@ LOGIN
     cursor: pointer;
     font-weight: bolder;
     color: var(--blue-color);
+    margin-top: 10px;
 }
 
 .card{
