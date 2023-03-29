@@ -31,7 +31,7 @@ def registerUser(request):
             return render(request, 'login.html', {'form': LoginForm()})
         else: 
             #throw an error
-            return HttpResponse("No se ha guardado el usuario")
+            return HttpResponse("El error es " + str(form.errors))
     else:
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
