@@ -205,6 +205,11 @@ SIGNUP
     line-height: 2px;
     padding: 10px;
     transition: all 1s ease-in-out;
+    margin-bottom: 10%;
+}
+
+.message-title{
+    padding-bottom: 5%;
 }
 
 .message-icon{
