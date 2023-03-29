@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 #from .models import User
 
-class UserForm(UserCreationForm):  
+class SignUpForm(UserCreationForm):  
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update({
@@ -55,3 +55,29 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2', ]
+
+class LoginForm(UserCreationForm):  
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs.update({
+            'id': 'email',
+            'class': 'form-input',
+            'name': 'email',
+            'required': 'true',
+            'type': 'email',
+            'placeholder': 'gemmasmith@mail.com'
+        })
+        self.fields["password1"].widget.attrs.update({
+            'id': 'password1',
+            'class': 'form-input',
+            'name': 'password1',
+            'required': 'true',
+            'type': 'password',
+            'placeholder': 'Password',
+            'minlength': '8',
+            'maxlength': '22'
+        })
+
+    class Meta:
+        model = User
+        fields = ['email', 'password']

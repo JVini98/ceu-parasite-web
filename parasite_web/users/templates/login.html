@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../static/css/styles.css">
-    <script src="../static/javascripts/scripts.js" defer></script>
+    <!--script src="../static/javascripts/scripts.js" defer></script-->
 </head>
 <body>
     <div class="container">
@@ -24,15 +24,16 @@
             </div>
             <div class="text-center line form-divider">or</div-->
             <form method="post" action="." id="login-form" class="login-form spacer">
+                {% csrf_token %}
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/envelope.png" alt="Email icon">
-                    <label for="email" form="signup-form">Your email:</label>
-                    <input type="email" class="form-input" placeholder="gemmasmith@mail.com">
+                    <label for="email" form="login-form">Your email:</label>
+                    {{ form.email }}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
-                    <label for="password" form="signup-form">Your password:</label>
-                    <input type="password" class="form-input" placeholder="Password">
+                    <label for="password1" form="login-form">Your password:</label>
+                    {{ form.password1 }}
                 </div>
                 <input type="submit" class="submit" value="Login">
             </form>
