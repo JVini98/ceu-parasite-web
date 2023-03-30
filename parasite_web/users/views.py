@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse
-from .forms import SignUpForm, LoginForm
+from django.shortcuts import render, HttpResponse, redirect
+from .forms import SignUpForm, LoginForm, EmailForm
 from .models import User
 
 # Create your views here.
@@ -9,7 +9,8 @@ def loginUser(request):
         password = request.POST['password1']
         if email is not None and password is not None:
             id = str(User.objects.get(email=email))
-            return render(request, 'game.html', {'id': id})
+            #return render(request, 'game.html', {'id': id})
+            return redirect('/game/')
         else: 
             # throw an error
             id = User.objects.get(email=form.cleaned_data["email"])
@@ -36,3 +37,14 @@ def registerUser(request):
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
 
+def forgotPassword(request): 
+    if request.method == 'POST':
+        email = request.POST['email']
+        if email is not None:
+            id = str(User.objects.get(email=email))
+            return render(request, 'check-email.html')
+        else: 
+            return HttpResponse("No ha ido bien la validación")
+    else: 
+        form = EmailForm()
+        return render (request, 'forgot-password.html', {'form': form})

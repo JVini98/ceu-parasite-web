@@ -81,3 +81,18 @@ class LoginForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+class EmailForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs.update({
+            'id': 'email',
+            'class': 'form-input',
+            'name': 'email',
+            'required': 'true',
+            'type': 'email',
+            'placeholder': 'gemmasmith@mail.com'
+        })
+    class Meta:
+        model = User
+        fields = ['email']

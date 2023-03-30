@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Parasites application">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Pyhton, Django">
+    <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign up</title>
+    <!-- custom CSS-->
     <link rel="stylesheet" href="../static/css/styles.css">
-    <script src="../static/javascripts/scripts.js" defer></script>
 </head>
 <body>
     <!--messages-->
@@ -23,17 +25,6 @@
     <div class="container">
         <div class="card center spacer">
             <h1 class="title text-center">Welcome to registration</h1>
-            <!--div class="social-login">
-                <button class="social-btn">
-                    <img class="icon" src="../static/images/gmail.svg" alt="gmail icon">
-                    Gmail
-                </button>
-                <button class="social-btn">
-                    <img class="icon" src="../static/images/facebook.svg" alt="facebook icon">
-                    Facebook
-                </button>
-            </div>
-            <div class="text-center line form-divider">or</div-->
             <form method="post" action="register" id="signup-form" class="login-form spacer">
                 {% csrf_token %}
                 <!--div class="input-group mb-3">
@@ -76,7 +67,9 @@
     <div class="redirect">
         Already have an account?&nbsp;<a href='/users' class="link">Login</a>
         <br><br>
-        <a href="./forgot-password.html" class="link">Forgot password?</a>
+        <a href="forgot_password" class="link">Forgot password?</a>
     </div>
+    <!-- custom JS -->
+    <script src="../static/javascripts/scripts.js" defer></script>
 </body>
 </html>
