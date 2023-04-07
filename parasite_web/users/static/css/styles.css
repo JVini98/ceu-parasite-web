@@ -13,6 +13,7 @@ GLOBAL
     --blue-color: #203bd4;
     --lt-color:#EDEDED;
     --text-fs: 8px;
+    --small-fs: 5px;
     --title-fs: 34px;
 }
 
@@ -112,6 +113,21 @@ LOGIN
     width: min(5vw, 30px);
 }
 
+.info{
+    height: min(4vw, 20px);
+    width: min(4vw, 20px);
+}
+
+.small{
+    font-size: calc(var(--small-fs) + 6 * ((100vw - 320px) / 680));
+    display: flex;
+    align-items: center;
+}
+
+.small img {
+    margin-right: 10px;
+}
+
 .social-btn:hover{
     border: solid 1px var(--blue-color);
     padding: 9px;
@@ -132,6 +148,9 @@ LOGIN
     border: solid 2px var(--blue-color);
 }
 
+.red{
+    color:red;
+}
 
 .input-group{
     position: relative;
