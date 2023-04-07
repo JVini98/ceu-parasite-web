@@ -1,6 +1,12 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import SignUpForm, LoginForm, EmailForm
 from .models import User
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+from .token import account_activation_token
 
 # Create your views here.
 def loginUser(request): 
@@ -19,6 +25,26 @@ def loginUser(request):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
+def activate(request, uidb64, token):
+    form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+
+def activateEmail(request, user, email):
+    mail_subject = "Activate your account"
+    message = render_to_string("activate-account.html",{
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "domain": get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[email])
+    if email.send():
+        return True
+    else:
+        return False
+
 def registerUser(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -31,7 +57,11 @@ def registerUser(request):
             #             password = form.cleaned_data.get("password1")
             #             )
             #user.save()
-            return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
+            status = activateEmail(request, user, form.cleaned_data.get("email"))
+            if status:
+                return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
+            else: 
+                return HttpResponse("No ha ido bien el envio del correo")
             #return render(request, 'login.html', {'form': LoginForm()})
         else: 
             #throw an error
