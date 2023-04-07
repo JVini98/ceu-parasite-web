@@ -210,7 +210,11 @@ LOGIN
 SIGNUP
 ##############*/
 
-.messages{
+.error{
+    color: red;
+}
+
+/* .messages{
     display: none;
     justify-content: space-between;
     align-items: center;
@@ -258,7 +262,7 @@ SIGNUP
     font-size: 12px;
     height: 100%;
 }
-}
+}*/
 
 
 /*####################

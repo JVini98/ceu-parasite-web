@@ -16,17 +16,16 @@
 </head>
 <body>
     <!--messages-->
-    <div class="messages">
+    <!-- <div class="messages">
         <img class="message-icon" src="../static/images/sign.svg" alt="error">
         <div class="message">
-            <h3 class="message-title">Error</h3>
-            <p class="message-paragraph">Something went wrong!</p>
+            <h3 class="message-title"></h3>
+            <p class="message-paragraph"></p>
         </div>
         <span class="message-close error">x</span>
-    </div>
+    </div> -->
     <!--end messages-->
-
-    <div class="container">
+    <div id="container" class="container">
         <div class="card center spacer">
             <h1 class="title text-center">Welcome to registration</h1>
             <form method="post" action="register" id="signup-form" class="login-form spacer">
@@ -62,14 +61,15 @@
                     <label for="password2" form="signup-form" class="label">Confirm your password<span class="red">*</span>:</label>
                     {{ form.password2 }}
                 </div>
+                <div id="error" class="error"></div>
                 <input type="submit" class="submit" value="Signup">
             </form>
+            <div class="redirect">
+                Already have an account?&nbsp;<a href='/users' class="link">Login</a>
+                <br><br>
+                <a href="forgot_password" class="link">Forgot password?</a>
+            </div>
         </div>
-    </div>
-    <div class="redirect">
-        Already have an account?&nbsp;<a href='/users' class="link">Login</a>
-        <br><br>
-        <a href="forgot_password" class="link">Forgot password?</a>
     </div>
     <!-- custom JS -->
     <script src="../static/javascripts/scripts.js" defer></script>
