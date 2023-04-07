@@ -11,6 +11,7 @@ GLOBAL
 :root{
     --bl-color:#171717;
     --blue-color: #203bd4;
+    --green-color: #4CAF50;
     --lt-color:#EDEDED;
     --text-fs: 8px;
     --small-fs: 5px;
@@ -129,7 +130,7 @@ LOGIN
 }
 
 .social-btn:hover{
-    border: solid 1px var(--blue-color);
+    border: solid 1px var(--green-color);
     padding: 9px;
 }
 
@@ -145,7 +146,7 @@ LOGIN
 }
 
 .form-input:hover, .form-input:focus{
-    border: solid 2px var(--blue-color);
+    border: solid 2px var(--green-color);
 }
 
 .red{
@@ -167,7 +168,7 @@ LOGIN
     border: none;
     padding: 10px;
     border-radius: 10px;
-    background-color: var(--blue-color);
+    background-color: var(--green-color);
     font-weight: bold;
     color: var(--lt-color);
     cursor: pointer;
@@ -178,8 +179,8 @@ LOGIN
 
 .submit:hover{
     background-color: var(--lt-color);
-    color: var(--blue-color);
-    border: solid 2px var(--blue-color);
+    color: var(--green-color);
+    border: solid 2px var(--green-color);
     padding: 8px;
 }
 

@@ -34,12 +34,14 @@ def activateEmail(request, user, email):
     message = render_to_string("activate-account.html",{
         "first_name": user.first_name,
         "last_name": user.last_name,
+        "email": user.email,
         "domain": get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http'
     })
     email = EmailMessage(mail_subject, message, to=[email])
+    email.content_subtype='html'
     if email.send():
         return True
     else:
