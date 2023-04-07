@@ -189,7 +189,7 @@ LOGIN
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: x-small;
+    font-size: smaller;
 }
 
 
@@ -270,6 +270,6 @@ RESET PASSWORD
 ##############*/
 
 .mute-paragraph{
-    font-size: 12px;
+    font-size: medium;
     opacity: 0.8;
 }

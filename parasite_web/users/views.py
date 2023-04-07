@@ -23,13 +23,16 @@ def registerUser(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User(first_name = form.cleaned_data.get("first_name"),
-                        last_name = form.cleaned_data.get("last_name"),
-                        email = form.cleaned_data.get("email"),
-                        password = form.cleaned_data.get("password1")
-                        )
-            user.save()
-            return render(request, 'login.html', {'form': LoginForm()})
+            user = form.save(commit=False)
+            user.is_active=False
+            # user = User(first_name = form.cleaned_data.get("first_name"),
+            #             last_name = form.cleaned_data.get("last_name"),
+            #             email = form.cleaned_data.get("email"),
+            #             password = form.cleaned_data.get("password1")
+            #             )
+            #user.save()
+            return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
+            #return render(request, 'login.html', {'form': LoginForm()})
         else: 
             #throw an error
             return HttpResponse("El error es " + str(form.errors))
