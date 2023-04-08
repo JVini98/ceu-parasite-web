@@ -16,8 +16,10 @@ def loginUser(request):
         password = request.POST['password1']
         if email is not None and password is not None:
             user = User.objects.get(email=email)
-            if user.is_active:
+            if user.is_active and user.password==password:
                 return redirect('/game/')
+            elif user.password!=password:
+                return HttpResponse("The email or the password are incorrect.")
             else: 
                 return HttpResponse("Your account is not activated. Please click the activation button we have send you to your email.")
         else: 
@@ -79,8 +81,9 @@ def registerUser(request):
             if status:
                 return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
             else: 
-                return HttpResponse("No ha ido bien el envio del correo")
-            #return render(request, 'login.html', {'form': LoginForm()})
+                title = "Sending Email Error"
+                message = "We were not able to send you the confirmation email. Please try again later."
+                return redirect(f'/users/error?title={title}&message={message}')
         else: 
             #throw an error
             return HttpResponse("El error es " + str(form.errors))
