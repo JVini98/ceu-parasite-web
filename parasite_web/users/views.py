@@ -26,8 +26,7 @@ def loginUser(request):
         return render(request, 'login.html', {'form': form})
 
 def activate(request, uidb64, token):
-    form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return redirect('/users/')
 
 def activateEmail(request, user, email):
     mail_subject = "Activate your account"
