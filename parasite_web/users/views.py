@@ -14,9 +14,11 @@ def loginUser(request):
         email = request.POST['email']
         password = request.POST['password1']
         if email is not None and password is not None:
-            id = str(User.objects.get(email=email))
-            #return render(request, 'game.html', {'id': id})
-            return redirect('/game/')
+            user = User.objects.get(email=email)
+            if user.is_active:
+                return redirect('/game/')
+            else: 
+                return HttpResponse("Your account is not activated. Please click the activation button we have send you to your email.")
         else: 
             # throw an error
             id = User.objects.get(email=form.cleaned_data["email"])
