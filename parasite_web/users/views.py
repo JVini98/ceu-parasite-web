@@ -81,14 +81,18 @@ def registerUser(request):
                         email = form.cleaned_data.get("email"),
                         password = form.cleaned_data.get("password1")
                         )
-            user.save()
-            status = activateEmail(request, user, form.cleaned_data.get("email"))
-            if status:
-                return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
-            else: 
-                title = "Sending Email Error"
-                message = "We were not able to send you the confirmation email. Please try again later."
-                return redirect(f'/users/error?title={title}&message={message}')
+            try: 
+                user.save()
+                status = activateEmail(request, user, form.cleaned_data.get("email"))
+                if status:
+                    return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
+                else: 
+                    title = "Sending Email Error"
+                    message = "We were not able to send you the confirmation email. Please try again later."
+                    return redirect(f'/users/error?title={title}&message={message}')
+            except: 
+                form = SignUpForm()
+                return render(request, 'signup.html', {'form': form, 'error': 'This email is already registered. Please use another email to sign up.'})
         else: 
             form = SignUpForm()
             return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Your errors are: ' + str(form.errors)})
