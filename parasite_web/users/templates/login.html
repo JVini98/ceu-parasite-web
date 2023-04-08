@@ -19,12 +19,12 @@
                 {% csrf_token %}
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/envelope.svg" alt="Email icon">
-                    <label for="email" form="login-form">Your email:</label>
+                    <label for="email" form="login-form">Your email<span class="red">*</span>:</label>
                     {{ form.email }}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
-                    <label for="password1" form="login-form">Your password:</label>
+                    <label for="password1" form="login-form">Your password<span class="red">*</span>:</label>
                     {{ form.password1 }}
                 </div>
                 <div id="error" class="error">{{error}}</div>
