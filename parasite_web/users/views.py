@@ -26,7 +26,18 @@ def loginUser(request):
         return render(request, 'login.html', {'form': form})
 
 def activate(request, uidb64, token):
-    return redirect('/users/')
+    try: 
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except: 
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect('/users/')
+    else: 
+        return HttpResponse("Activation link has expired or another error occurred. Please try again.")
 
 def activateEmail(request, user, email):
     mail_subject = "Activate your account"
@@ -50,14 +61,12 @@ def registerUser(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active=False
-            # user = User(first_name = form.cleaned_data.get("first_name"),
-            #             last_name = form.cleaned_data.get("last_name"),
-            #             email = form.cleaned_data.get("email"),
-            #             password = form.cleaned_data.get("password1")
-            #             )
-            #user.save()
+            user = User(first_name = form.cleaned_data.get("first_name"),
+                        last_name = form.cleaned_data.get("last_name"),
+                        email = form.cleaned_data.get("email"),
+                        password = form.cleaned_data.get("password1")
+                        )
+            user.save()
             status = activateEmail(request, user, form.cleaned_data.get("email"))
             if status:
                 return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
