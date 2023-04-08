@@ -15,17 +15,22 @@ def loginUser(request):
         email = request.POST['email']
         password = request.POST['password1']
         if email is not None and password is not None:
-            user = User.objects.get(email=email)
-            if user.is_active and user.password==password:
-                return redirect('/game/')
-            elif user.password!=password:
-                return HttpResponse("The email or the password are incorrect.")
-            else: 
-                return HttpResponse("Your account is not activated. Please click the activation button we have send you to your email.")
+            try: 
+                user = User.objects.get(email=email)
+                if user.is_active and user.password==password:
+                    return redirect('/game/')
+                elif user.password!=password:
+                    error = 'You entered an incorrect email or password'
+                else: 
+                    error = "Your account is not activated. Please click the activation button we have sent to your email"
+                form = LoginForm()
+                return render(request, 'login.html', {'form': form, 'error': error})
+            except: 
+                form = LoginForm()
+                return render(request, 'login.html', {'form': form, 'error': 'You entered an incorrect email or password'})
         else: 
-            # throw an error
-            id = User.objects.get(email=form.cleaned_data["email"])
-            return HttpResponse("No ha ido bien la validación " + str(id))
+            form = LoginForm()
+            return render(request, 'login.html', {'form': form, 'error': 'You need to introduce a registered email and a password'})
     else: 
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
@@ -85,8 +90,8 @@ def registerUser(request):
                 message = "We were not able to send you the confirmation email. Please try again later."
                 return redirect(f'/users/error?title={title}&message={message}')
         else: 
-            #throw an error
-            return HttpResponse("El error es " + str(form.errors))
+            form = SignUpForm()
+            return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Your errors are: ' + str(form.errors)})
     else:
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
@@ -96,10 +101,15 @@ def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST['email']
         if email is not None:
-            id = str(User.objects.get(email=email))
-            return render(request, 'check-email.html')
+            try: 
+                user = User.objects.get(email=email)
+                return render(request, 'check-email.html')
+            except:
+                form = EmailForm()
+                return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email'})
         else: 
-            return HttpResponse("No ha ido bien la validación")
+            form = EmailForm()
+            return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email'})
     else: 
         form = EmailForm()
         return render (request, 'forgot-password.html', {'form': form})
