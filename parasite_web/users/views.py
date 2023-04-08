@@ -20,17 +20,17 @@ def loginUser(request):
                 if user.is_active and user.password==password:
                     return redirect('/game/')
                 elif user.password!=password:
-                    error = 'You entered an incorrect email or password'
+                    error = 'You entered an incorrect email or password.'
                 else: 
-                    error = "Your account is not activated. Please click the activation button we have sent to your email"
+                    error = "Your account is not activated. Please click the activation button we have sent to your email."
                 form = LoginForm()
                 return render(request, 'login.html', {'form': form, 'error': error})
             except: 
                 form = LoginForm()
-                return render(request, 'login.html', {'form': form, 'error': 'You entered an incorrect email or password'})
+                return render(request, 'login.html', {'form': form, 'error': 'You entered an incorrect email or password.'})
         else: 
             form = LoginForm()
-            return render(request, 'login.html', {'form': form, 'error': 'You need to introduce a registered email and a password'})
+            return render(request, 'login.html', {'form': form, 'error': 'You need to introduce a registered email and a password.'})
     else: 
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
@@ -71,18 +71,29 @@ def activateEmail(request, user, email):
     else:
         return False
 
+# Check if user is valid
+def checkUser(form):
+    if (form.cleaned_data.get("password1")==form.cleaned_data.get("password2")):
+        user = User(first_name = form.cleaned_data.get("first_name"),
+                    last_name = form.cleaned_data.get("last_name"),
+                    email = form.cleaned_data.get("email"),
+                    password = form.cleaned_data.get("password1")
+                    )
+        if (User.objects.filter(email=user.email).exists()):
+            return [False, None, "Email"]
+        else:
+            user.save()
+            return [True, user, None]
+    else: 
+        return [False, None, "Password"]
+
 # Register a user (inactive by default) 
 def registerUser(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User(first_name = form.cleaned_data.get("first_name"),
-                        last_name = form.cleaned_data.get("last_name"),
-                        email = form.cleaned_data.get("email"),
-                        password = form.cleaned_data.get("password1")
-                        )
-            try: 
-                user.save()
+            valid, user, error = checkUser(form)
+            if valid: 
                 status = activateEmail(request, user, form.cleaned_data.get("email"))
                 if status:
                     return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
@@ -90,9 +101,11 @@ def registerUser(request):
                     title = "Sending Email Error"
                     message = "We were not able to send you the confirmation email. Please try again later."
                     return redirect(f'/users/error?title={title}&message={message}')
-            except: 
-                form = SignUpForm()
-                return render(request, 'signup.html', {'form': form, 'error': 'This email is already registered. Please use another email to sign up.'})
+            else: 
+                if error=="Email":
+                    return render(request, 'signup.html', {'form': form, 'error': 'This email is already registered. Please use another email to sign up.'})
+                elif error=="Password":
+                    return render(request, 'signup.html', {'form': form, 'error': 'The passwords do not match. Plase make sure you typed them correctly.'})
         else: 
             form = SignUpForm()
             return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Your errors are: ' + str(form.errors)})
@@ -107,13 +120,13 @@ def forgotPassword(request):
         if email is not None:
             try: 
                 user = User.objects.get(email=email)
-                return render(request, 'check-email.html')
+                return render(request, 'check-email.html', {'email': email})
             except:
                 form = EmailForm()
-                return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email'})
+                return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email.'})
         else: 
             form = EmailForm()
-            return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email'})
+            return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email.'})
     else: 
         form = EmailForm()
         return render (request, 'forgot-password.html', {'form': form})
