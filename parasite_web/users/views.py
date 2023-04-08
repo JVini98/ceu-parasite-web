@@ -9,6 +9,7 @@ from django.core.mail import EmailMessage
 from .token import account_activation_token
 
 # Create your views here.
+# Login User
 def loginUser(request): 
     if request.method == 'POST':
         email = request.POST['email']
@@ -27,6 +28,7 @@ def loginUser(request):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
+# Activate user in DB when the activation button is clicked
 def activate(request, uidb64, token):
     try: 
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -39,8 +41,11 @@ def activate(request, uidb64, token):
         user.save()
         return redirect('/users/')
     else: 
-        return HttpResponse("Activation link has expired or another error occurred. Please try again.")
+        title = "Activation Link Error"
+        message = "Activation link has expired or another error occurred. Please try again later."
+        return redirect(f'/users/error?title={title}&message={message}')
 
+# Send email to the user to activate account
 def activateEmail(request, user, email):
     mail_subject = "Activate your account"
     message = render_to_string("activate-account.html",{
@@ -59,6 +64,7 @@ def activateEmail(request, user, email):
     else:
         return False
 
+# Register a user (inactive by default) 
 def registerUser(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -82,6 +88,7 @@ def registerUser(request):
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
 
+# Change the password of a user
 def forgotPassword(request): 
     if request.method == 'POST':
         email = request.POST['email']
@@ -93,3 +100,9 @@ def forgotPassword(request):
     else: 
         form = EmailForm()
         return render (request, 'forgot-password.html', {'form': form})
+
+# Display errors
+def error(request):
+    title = request.GET.get('title')
+    message = request.GET.get('message')
+    return render(request, 'error.html', {'title': title, 'message': message})

@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.loginUser, name="login"),
     path('register', views.registerUser, name="register"),
     path('forgot_password', views.forgotPassword, name="change_password"),
-    path('activate/<uidb64>/<token>', views.activate, name="activate")
+    path('activate/<uidb64>/<token>', views.activate, name="activate"),
+    path('error', views.error, name="Error")
 ]
