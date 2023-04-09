@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import SignUpForm, LoginForm, EmailForm
+from .forms import SignUpForm, LoginForm, EmailForm, PasswordForm
 from .models import User
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
@@ -50,7 +50,7 @@ def verifyLink(request, uidb64, token, action):
             user.save()
             return redirect('/users/')
         elif action == "Reset":
-            return render(request, 'reset-password.html')
+            return redirect('/users/reset_password')
     else: 
         title = "Activation Link Error"
         message = "Activation link has expired or another error occurred. Please try again later."
@@ -123,7 +123,7 @@ def registerUser(request):
         form = SignUpForm()
         return render(request, 'signup.html', {'form': form})
 
-# Change the password of a user
+# User requests a new password
 def forgotPassword(request): 
     if request.method == 'POST':
         email = request.POST['email']
@@ -146,6 +146,11 @@ def forgotPassword(request):
     else: 
         form = EmailForm()
         return render (request, 'forgot-password.html', {'form': form})
+    
+# Change a user password
+def resetPassword(request):
+    form = PasswordForm()
+    return render(request, 'reset-password.html', {'form': form}) 
 
 # Display errors
 def error(request):
