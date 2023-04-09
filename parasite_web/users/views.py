@@ -179,7 +179,7 @@ def resetPassword(request):
             return render(request, 'reset-password.html', {'form': form, 'email': decoded_email})
         else: 
             title = "Change your password through the email link"
-            message = "You need to change your password through the email link, otherwise it will not work."
+            message = "You need to change your password through the email link, otherwise, you will not be allow to do so."
             return redirect(f'/users/error?title={title}&message={message}')
 
 # Display errors
