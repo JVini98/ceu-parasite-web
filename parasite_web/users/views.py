@@ -165,17 +165,22 @@ def resetPassword(request):
                 return redirect('/users/')
             except: 
                 form = PasswordForm()
-                error = "The email account is not registered." + str(user)
+                error = "The email account is not registered."
                 return render(request, 'reset-password.html', {'form': form, 'error': error})    
         else: 
             form = PasswordForm()
             error = "The passwords do not match. Plase make sure you typed them correctly."
             return render(request, 'reset-password.html', {'form': form, 'error': error}) 
     else: 
-        decoded_email = urllib.parse.unquote(request.session.get('encoded_email'))
-        del request.session['encoded_email']
-        form = PasswordForm()
-        return render(request, 'reset-password.html', {'form': form, 'email': decoded_email}) 
+        if request.session.get('encoded_email'):
+            decoded_email = urllib.parse.unquote(request.session.get('encoded_email'))
+            del request.session['encoded_email']
+            form = PasswordForm()
+            return render(request, 'reset-password.html', {'form': form, 'email': decoded_email})
+        else: 
+            title = "Change your password through the email link"
+            message = "You need to change your password through the email link, otherwise it will not work."
+            return redirect(f'/users/error?title={title}&message={message}')
 
 # Display errors
 def error(request):
