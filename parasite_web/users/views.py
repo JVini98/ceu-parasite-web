@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import SignUpForm, LoginForm, EmailForm, PasswordForm
 from .models import User
+from django.contrib.auth.hashers import make_password, check_password
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -19,9 +20,9 @@ def loginUser(request):
         if email is not None and password is not None:
             try: 
                 user = User.objects.get(email=email)
-                if user.is_active and user.password==password:
+                if user.is_active and check_password(password, user.password):
                     return redirect('/game/')
-                elif user.password!=password:
+                elif not check_password(password, user.password):
                     error = 'You entered an incorrect email or password.'
                 else: 
                     error = "Your account is not activated. Please click the activation button we have sent to your email."
@@ -97,7 +98,7 @@ def checkUser(form):
         user = User(first_name = form.cleaned_data.get("first_name"),
                     last_name = form.cleaned_data.get("last_name"),
                     email = form.cleaned_data.get("email"),
-                    password = form.cleaned_data.get("password1")
+                    password = make_password(form.cleaned_data.get("password1"))
                     )
         if (User.objects.filter(email=user.email).exists()):
             return [False, None, "Email"]
@@ -166,7 +167,7 @@ def resetPassword(request):
         if (pass1 == pass2):
             try: 
                 user = User.objects.get(email=email)
-                user.password = pass1
+                user.password = make_password(pass1)
                 user.save()
                 request.session['password_succes'] = "Your password was successfully changed"
                 return redirect('/users/')
