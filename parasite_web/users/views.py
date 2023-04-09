@@ -67,7 +67,7 @@ def activateEmail(request, user, email, subject):
         template= "activate-account.html"
     elif subject=="Reset":
         mail_subject = "Reset your password"
-        template= "password-email.html"
+        template= "activate-password.html"
     message = render_to_string(template,{
         "first_name": user.first_name,
         "last_name": user.last_name,
@@ -110,7 +110,7 @@ def registerUser(request):
             if valid: 
                 status = activateEmail(request, user, form.cleaned_data.get("email"), "Activate")
                 if status:
-                    return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
+                    return render(request, 'email-activate.html', {'email': form.cleaned_data.get("email")})
                 else: 
                     title = "Sending Email Error"
                     message = "We were not able to send you the confirmation email. Please try again later."
@@ -136,7 +136,7 @@ def forgotPassword(request):
                 user = User.objects.get(email=email)
                 status = activateEmail(request, user, email, "Reset")
                 if status: 
-                    return render(request, 'check-email.html', {'email': email})
+                    return render(request, 'email-password.html', {'email': email})
                 else: 
                     title = "Sending Email Error"
                     message = "We were not able to send you the reset password email. Please try again later."

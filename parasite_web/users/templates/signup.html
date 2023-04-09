@@ -7,34 +7,17 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up</title>
-    <!-- bootstrap -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="../static/images/favicon.png">
     <!-- custom CSS-->
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <!--messages-->
-    <!-- <div class="messages">
-        <img class="message-icon" src="../static/images/sign.svg" alt="error">
-        <div class="message">
-            <h3 class="message-title"></h3>
-            <p class="message-paragraph"></p>
-        </div>
-        <span class="message-close error">x</span>
-    </div> -->
-    <!--end messages-->
     <div id="container" class="container">
         <div class="card center spacer">
             <h1 class="title text-center">Welcome to registration</h1>
             <form method="post" action="register" id="signup-form" class="login-form spacer">
                 {% csrf_token %}
-                <!-- <div class="input-group">
-                    <label for="first_name" form="signup-form">Your first name*:</label><br>
-                    <span class="input-group-addon"><img src="../static/images/profile-user.svg" alt="User icon"></span>
-                    {{form.first_name}}
-                </div> -->
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
                     <label for="first_name" form="signup-form">Your first name<span class="red">*</span>:</label>
