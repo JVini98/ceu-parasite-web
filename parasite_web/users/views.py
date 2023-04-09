@@ -36,7 +36,8 @@ def loginUser(request):
         return render(request, 'login.html', {'form': form})
 
 # Activate user in DB when the activation button is clicked
-def activate(request, uidb64, token):
+# or Change password in DB when the reset button is clicked
+def verifyLink(request, uidb64, token, action):
     try: 
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -44,15 +45,18 @@ def activate(request, uidb64, token):
         user = None
     
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return redirect('/users/')
+        if action == "Activate":
+            user.is_active = True
+            user.save()
+            return redirect('/users/')
+        elif action == "Reset":
+            return render(request, 'reset-password.html')
     else: 
         title = "Activation Link Error"
         message = "Activation link has expired or another error occurred. Please try again later."
         return redirect(f'/users/error?title={title}&message={message}')
 
-# Send email to the user to activate account
+# Send email to the user to activate account or reset password
 def activateEmail(request, user, email, subject):
     if subject=="Activate":
         mail_subject = "Activate your account"
@@ -67,6 +71,7 @@ def activateEmail(request, user, email, subject):
         "domain": get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
+        'action': subject,
         'protocol': 'https' if request.is_secure() else 'http'
     })
     email = EmailMessage(mail_subject, message, to=[email])
