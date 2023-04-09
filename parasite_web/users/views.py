@@ -53,7 +53,8 @@ def verifyLink(request, uidb64, token, action):
             return redirect('/users/')
         elif action == "Reset":
             encoded_email= urllib.parse.quote(user.email)
-            return redirect(f'/users/reset_password?email={encoded_email}')
+            request.session['encoded_email'] = encoded_email
+            return redirect('/users/reset_password')
     else: 
         title = "Activation Link Error"
         message = "Activation link has expired or another error occurred. Please try again later."
@@ -171,7 +172,8 @@ def resetPassword(request):
             error = "The passwords do not match. Plase make sure you typed them correctly."
             return render(request, 'reset-password.html', {'form': form, 'error': error}) 
     else: 
-        decoded_email = urllib.parse.unquote(request.GET.get('email'))
+        decoded_email = urllib.parse.unquote(request.session.get('encoded_email'))
+        del request.session['encoded_email']
         form = PasswordForm()
         return render(request, 'reset-password.html', {'form': form, 'email': decoded_email}) 
 
