@@ -8,6 +8,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token
 
+import urllib.parse
+
 # Create your views here.
 # Login User
 def loginUser(request): 
@@ -50,7 +52,8 @@ def verifyLink(request, uidb64, token, action):
             user.save()
             return redirect('/users/')
         elif action == "Reset":
-            return redirect('/users/reset_password')
+            encoded_email= urllib.parse.quote(user.email)
+            return redirect(f'/users/reset_password?email={encoded_email}')
     else: 
         title = "Activation Link Error"
         message = "Activation link has expired or another error occurred. Please try again later."
@@ -149,8 +152,28 @@ def forgotPassword(request):
     
 # Change a user password
 def resetPassword(request):
-    form = PasswordForm()
-    return render(request, 'reset-password.html', {'form': form}) 
+    if request.method == 'POST':
+        email = request.POST['email']
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        if (pass1 == pass2):
+            try: 
+                user = User.objects.get(email=email)
+                user.password = pass1
+                user.save()
+                return redirect('/users/')
+            except: 
+                form = PasswordForm()
+                error = "The email account is not registered." + str(user)
+                return render(request, 'reset-password.html', {'form': form, 'error': error})    
+        else: 
+            form = PasswordForm()
+            error = "The passwords do not match. Plase make sure you typed them correctly."
+            return render(request, 'reset-password.html', {'form': form, 'error': error}) 
+    else: 
+        decoded_email = urllib.parse.unquote(request.GET.get('email'))
+        form = PasswordForm()
+        return render(request, 'reset-password.html', {'form': form, 'email': decoded_email}) 
 
 # Display errors
 def error(request):
