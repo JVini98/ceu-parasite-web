@@ -34,8 +34,14 @@ def loginUser(request):
             form = LoginForm()
             return render(request, 'login.html', {'form': form, 'error': 'You need to introduce a registered email and a password.'})
     else: 
-        form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        if request.session.get('password_succes'):
+            message = request.session.get('password_succes')
+            del request.session['password_succes']
+            form = LoginForm()
+            return render(request, 'login.html', {'form': form, 'message': message})
+        else: 
+            form = LoginForm()
+            return render(request, 'login.html', {'form': form})
 
 # Activate user in DB when the activation button is clicked
 # or Change password in DB when the reset button is clicked
@@ -162,6 +168,7 @@ def resetPassword(request):
                 user = User.objects.get(email=email)
                 user.password = pass1
                 user.save()
+                request.session['password_succes'] = "Your password was successfully changed"
                 return redirect('/users/')
             except: 
                 form = PasswordForm()

@@ -215,6 +215,10 @@ SIGNUP
     color: red;
 }
 
+.message{
+    color: green;
+}
+
 
 /*####################
 RESET PASSWORD
