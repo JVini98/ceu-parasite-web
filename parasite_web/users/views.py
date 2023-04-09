@@ -53,9 +53,14 @@ def activate(request, uidb64, token):
         return redirect(f'/users/error?title={title}&message={message}')
 
 # Send email to the user to activate account
-def activateEmail(request, user, email):
-    mail_subject = "Activate your account"
-    message = render_to_string("activate-account.html",{
+def activateEmail(request, user, email, subject):
+    if subject=="Activate":
+        mail_subject = "Activate your account"
+        template= "activate-account.html"
+    elif subject=="Reset":
+        mail_subject = "Reset your password"
+        template= "password-email.html"
+    message = render_to_string(template,{
         "first_name": user.first_name,
         "last_name": user.last_name,
         "email": user.email,
@@ -94,7 +99,7 @@ def registerUser(request):
         if form.is_valid():
             valid, user, error = checkUser(form)
             if valid: 
-                status = activateEmail(request, user, form.cleaned_data.get("email"))
+                status = activateEmail(request, user, form.cleaned_data.get("email"), "Activate")
                 if status:
                     return render(request, 'register-email.html', {'email': form.cleaned_data.get("email")})
                 else: 
@@ -120,7 +125,13 @@ def forgotPassword(request):
         if email is not None:
             try: 
                 user = User.objects.get(email=email)
-                return render(request, 'check-email.html', {'email': email})
+                status = activateEmail(request, user, email, "Reset")
+                if status: 
+                    return render(request, 'check-email.html', {'email': email})
+                else: 
+                    title = "Sending Email Error"
+                    message = "We were not able to send you the reset password email. Please try again later."
+                    return redirect(f'/users/error?title={title}&message={message}')
             except:
                 form = EmailForm()
                 return render(request, 'forgot-password.html', {'form': form, 'error': 'You need to introduce a registered email.'})
