@@ -4,10 +4,19 @@ const buttonSave = document.getElementById('saveButton');
 const buttonSend = document.getElementById('sendButton');
 const parasitesForm = document.getElementById('parasitesForm');
 const jsonForm = document.getElementById('jsonForm');
-const parasitesResponse = document.getElementById('parasitesResponse');
 const annotationForm = document.getElementById('annotation');
 const alertBox = document.getElementById('alertBox');
 const csrf = document.getElementsByName("csrfmiddlewaretoken");
+
+// working with the slider
+slider = document.querySelector('.slider');
+sliderButtonLeft = document.querySelector('.slider-button-left');
+sliderButtonRight = document.querySelector('.slider-button-right');
+let slides;
+let slideWidth = 0;
+
+let currentPosition = 0;
+slider.style.transform = `translateX(${currentPosition}px)`;
 
 let url;
 let imagePosition;
@@ -41,11 +50,17 @@ buttonCrop.addEventListener('click', ()=>{
 // temporary save image on click
 buttonSave.addEventListener('click', ()=>{
   annotationSave = annotationForm.value;
-  parasitesResponse.innerHTML += `<image src="${url}" width="150px" class="margin"/>`
-                               + `<p>${annotationSave}</p>`
-                               // + `<p>x:${imagePosition.x}; y:${imagePosition.y}; width:${imagePosition.width}; height:${imagePosition.height}
+  // Adding new slide to the slider dynamically
+  slider.innerHTML += `<div class="slide">`
+                    + `<image src="${url}" width="150px" class="margin"/>`
+                    + `<p class="textCenter">${annotationSave}</p>`
+                    + `</div>`
+  slides = document.querySelectorAll('.slide');
+  // alert("The number of slides are " + slides.length)
+  slideWidth = slides[0].clientWidth + 30;
+  // List with all the parasites selected by the user
   parasitesList.push(createParasiteObj(annotationSave, imagePosition.x, imagePosition.y, imagePosition.width, imagePosition.height));
-  showbuttonSave(parasitesResponse.innerHTML);
+  showbuttonSave(slider.innerHTML);
 });
 
 // create parasite object
@@ -98,8 +113,22 @@ buttonSend.addEventListener('click', ()=>{
   });
 });
 
+// Move images in the slider
+sliderButtonLeft.addEventListener('click', () => {
+  currentPosition += slideWidth;
+  if (currentPosition > 0) {
+    currentPosition = -(slides.length - 1) * slideWidth;
+  }
+  slider.style.transform = `translateX(${currentPosition}px)`;
+});
 
-  
+sliderButtonRight.addEventListener('click', () => {
+  currentPosition -= slideWidth;
+  if (currentPosition < -(slides.length - 1) * slideWidth) {
+    currentPosition = 0;
+  }
+  slider.style.transform = `translateX(${currentPosition}px)`;
+});
 
 
 

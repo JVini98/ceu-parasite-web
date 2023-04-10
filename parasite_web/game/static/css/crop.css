@@ -1,3 +1,17 @@
+#cropButton, #sendButton{
+    /* float: right; */
+    margin-right: 30px;
+}
+
+#sendButton{
+    /* float: right; */
+    margin-bottom: 15px;
+}
+
+.buttons{
+    text-align: right;
+}
+
 .marginBotton{
     margin-bottom: 15px;
 }
