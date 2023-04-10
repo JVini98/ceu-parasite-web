@@ -1,100 +1,100 @@
 <!DOCTYPE html>
 <html [lang="en"]>
-<head>
-	<title>Home</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Parasites application">
-    <meta name="keywords" content="HTML, CSS, JavaScript, Pyhton, Django">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- favicon -->
-    <link rel="icon" type="image/png" href="../static/images/favicon.png">
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-</head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">
-			<img src="../static/images/favicon.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="Your Logo">
-			Parasites Web
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		  <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-		  <ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a class="nav-link" href="/">Home</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="/uploads">Uploads</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="/game">Game</a>
-			</li>
-		  </ul>
-		  <ul class="navbar-nav ml-auto">
-			<li class="nav-item dropdown">
-			  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-user"></i> {{email}}
-			  </a>
-			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="/users/">Sign in</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="/users/register">Sign up</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Logout</a>
-			  </div>
-			</li>
-		  </ul>
+	<head>
+		<title>Home</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="Parasites application">
+		<meta name="keywords" content="HTML, CSS, JavaScript, Python, Django">
+		<meta name="author" content="Patricia Herrera">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- favicon -->
+		<link rel="icon" type="image/png" href="../static/images/favicon.png">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	</head>
+	<body>
+		<!-- Navbar -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="/">
+				<img src="../static/images/favicon.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="Your Logo">
+				Parasites Web
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/">Home</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="/uploads">Uploads</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="/game">Game</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-user"></i> {{email}}
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="/users/">Sign in</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/users/register">Sign up</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Logout</a>
+				</div>
+				</li>
+			</ul>
+			</div>
+		</nav>
+		<div class="jumbotron jumbotron-fluid py-5">
+			<div class="container text-center py-0">
+			<h1 class="display-5">Welcome to Parasites Web</h1>
+			<p class="lead mb-0">The main purpose of this website is to help <b>pharmaceutical students</b> learn about parasites.</p>
+			<p class="lead mb-0">For that task, we have developed a <b>new AI</b> that recognizes parasites and a <b>game</b> to help train that AI with your knowledge.</p>
+			<p class="lead mb-0">In order to use it, you need to <b><u>register or login</u></b> into your account.</p>
+			</div>
 		</div>
-	</nav>
-	<div class="jumbotron jumbotron-fluid py-5">
-		<div class="container text-center py-0">
-		  <h1 class="display-5">Welcome to Parasites Web</h1>
-		  <p class="lead mb-0">The main purpose of this website is to help <b>pharmaceutical students</b> learn about parasites.</p>
-		  <p class="lead mb-0">For that task, we have developed a <b>new AI</b> that recognizes parasites and a <b>game</b> to help train that AI <b><u>with your knowledge.</u></b></p>
-		  <p class="lead mb-0">In order to use it, you need to register or login into your account.</p>
-		</div>
-	</div>
-	
-	<!-- Features Section -->
-	<div class="container">
-	<div class="row">
-		<div class="col-md-6 mb-3">
-		<div class="card">
-			<img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Uploads image">
-			<div class="card-body">
-			<h5 class="card-title">New Artificial Intelligence</h5>
-			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+		<!-- Content -->
+		<div class="container">
+		<div class="row">
+			<div class="col-md-6 mb-3">
+			<div class="card">
+				<img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Uploads image">
+				<div class="card-body">
+				<h5 class="card-title">Uploads</h5>
+				<p class="card-text text-justify">You can provide an image to the AI and it will try to identify it. If it is successfull, the AI will return you the name, otherwise, it will be added to the game so users can identify it.</p>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-6 mb-3">
+			<div class="card">
+				<img class="card-img-top" src="../static/images/game.jpg" width="350" alt="Game image">
+				<div class="card-body">
+				<h5 class="card-title">Game</h5>
+				<p class="card-text text-justify">In this game you will be given a picture from which you can identify several parasites and name them. Your contribution will be considered among many others to improve the AI.</p>
+				</div>
+			</div>
 			</div>
 		</div>
 		</div>
-		<div class="col-md-6 mb-3">
-		<div class="card">
-			<img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Game image">
-			<div class="card-body">
-			<h5 class="card-title">Game</h5>
-			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+		<!-- Footer -->
+		<footer class="bg-dark py-3">
+			<div class="container text-center">
+			<span class="text-white">Copyright &copy; Parasites Web
+				<script>document.write(new Date().getFullYear());</script>
+			</span>
 			</div>
-		</div>
-		</div>
-	</div>
-	</div>
-	<!-- Footer -->
-	<footer class="bg-dark py-3">
-		<div class="container text-center">
-		  <span class="text-white">Copyright &copy; Parasites Web
-			<script>document.write(new Date().getFullYear());</script>
-		  </span>
-		</div>
-	</footer>
-	<!-- Bootstrap JS and Popper-->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+		</footer>
+		<!-- Bootstrap JS and Popper-->
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
 </html>
