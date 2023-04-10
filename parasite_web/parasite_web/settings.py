@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'uploads.apps.UploadsConfig',
     'game',
     'users',
+    'home',
 ]
 
 
