@@ -54,7 +54,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2', ]
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
 
 class LoginForm(UserCreationForm):  
     def __init__(self, *args, **kwargs):
@@ -96,3 +96,31 @@ class EmailForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['email']
+
+class PasswordForm(UserCreationForm):  
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].widget.attrs.update({
+            'id': 'password1',
+            'class': 'form-input',
+            'name': 'password1',
+            'required': 'true',
+            'type': 'password',
+            'placeholder': 'Password',
+            'minlength': '8',
+            'maxlength': '22'
+        })
+        self.fields["password2"].widget.attrs.update({
+            'id': 'password2',
+            'class': 'form-input',
+            'name': 'password2',
+            'required': 'true',
+            'type': 'password',
+            'placeholder': 'Confirm Password',
+            'minlength': '8',
+            'maxlength': '22'
+        })
+
+    class Meta:
+        model = User
+        fields = ['password1', 'password2']

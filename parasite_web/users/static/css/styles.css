@@ -11,8 +11,10 @@ GLOBAL
 :root{
     --bl-color:#171717;
     --blue-color: #203bd4;
+    --green-color: #4CAF50;
     --lt-color:#EDEDED;
     --text-fs: 8px;
+    --small-fs: 5px;
     --title-fs: 34px;
 }
 
@@ -37,7 +39,7 @@ html{
 .card{
     border-radius: 10px;
     box-shadow: 0 0 20px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s ease-in-out;
+    /* transition: all 0.3s ease-in-out; */
     width: 55%;
     min-width: 320px;
     padding: 5%;
@@ -112,8 +114,23 @@ LOGIN
     width: min(5vw, 30px);
 }
 
+.info{
+    height: min(4vw, 20px);
+    width: min(4vw, 20px);
+}
+
+.small{
+    font-size: calc(var(--small-fs) + 6 * ((100vw - 320px) / 680));
+    display: flex;
+    align-items: center;
+}
+
+.small img {
+    margin-right: 10px;
+}
+
 .social-btn:hover{
-    border: solid 1px var(--blue-color);
+    border: solid 1px var(--green-color);
     padding: 9px;
 }
 
@@ -129,9 +146,12 @@ LOGIN
 }
 
 .form-input:hover, .form-input:focus{
-    border: solid 2px var(--blue-color);
+    border: solid 2px var(--green-color);
 }
 
+.red{
+    color:red;
+}
 
 .input-group{
     position: relative;
@@ -148,7 +168,7 @@ LOGIN
     border: none;
     padding: 10px;
     border-radius: 10px;
-    background-color: var(--blue-color);
+    background-color: var(--green-color);
     font-weight: bold;
     color: var(--lt-color);
     cursor: pointer;
@@ -159,8 +179,8 @@ LOGIN
 
 .submit:hover{
     background-color: var(--lt-color);
-    color: var(--blue-color);
-    border: solid 2px var(--blue-color);
+    color: var(--green-color);
+    border: solid 2px var(--green-color);
     padding: 8px;
 }
 
@@ -170,7 +190,7 @@ LOGIN
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: x-small;
+    font-size: smaller;
 }
 
 
@@ -191,54 +211,12 @@ LOGIN
 SIGNUP
 ##############*/
 
-.messages{
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 0 24px 8px rgba(0,0,0,0.1);
-    width: 50%;
-    min-width: 320px;
-    position: absolute;
-    top: 2%;
-    left: 50%;
-    transform: translateX(-50%);
-    line-height: 2px;
-    padding: 10px;
-    transition: all 1s ease-in-out;
-    margin-bottom: 10%;
+.error{
+    color: red;
 }
 
-.message-title{
-    padding-bottom: 5%;
-}
-
-.message-icon{
-    position: relative;
-    width: min(5vw, 30px);
-    height: min(5vw, 30px);
-}
-
-.messages .message-paragraph{
-    opacity: 0.7;
-}
-
-.message-close{
-    cursor:pointer;
-    padding: 10px;
-    border-radius: 30%;
-}
-
-.error:hover{
-    background-color: #F0C419;
-
-}
-
-
-@media screen and (max-width: 900px) {
-    .messages > *{
-    font-size: 12px;
-    height: 100%;
-}
+.message{
+    color: green;
 }
 
 
@@ -247,6 +225,6 @@ RESET PASSWORD
 ##############*/
 
 .mute-paragraph{
-    font-size: 12px;
+    font-size: medium;
     opacity: 0.8;
 }

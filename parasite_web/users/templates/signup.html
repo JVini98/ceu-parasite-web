@@ -7,67 +7,53 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="../static/images/favicon.png">
     <!-- custom CSS-->
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <!--messages-->
-    <div class="messages">
-        <img class="message-icon" src="../static/images/sign.svg" alt="error">
-        <div class="message">
-            <h3 class="message-title">Error</h3>
-            <p class="message-paragraph">Something went wrong!</p>
-        </div>
-        <span class="message-close error">x</span>
-    </div>
-    <!--end messages-->
-
-    <div class="container">
+    <div id="container" class="container">
         <div class="card center spacer">
             <h1 class="title text-center">Welcome to registration</h1>
             <form method="post" action="register" id="signup-form" class="login-form spacer">
                 {% csrf_token %}
-                <!--div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1">
-                        <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
-                      </span>
-                    </div>
-                    {{form.first_name}}
-                </div-->
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
-                    <label for="first_name" form="signup-form">Your first name:</label>
+                    <label for="first_name" form="signup-form">Your first name<span class="red">*</span>:</label>
                     {{form.first_name}}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/profile-user.svg" alt="User icon">
-                    <label for="last_name" form="signup-form">Your last name:</label>
+                    <label for="last_name" form="signup-form">Your last name<span class="red">*</span>:</label>
                     {{form.last_name}}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/envelope.svg" alt="Email icon">
-                    <label for="email" form="signup-form">Your email:</label>
+                    <label for="email" form="signup-form">Your email<span class="red">*</span>:</label>
                     {{ form.email }}
                 </div>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
-                    <label for="password1" form="signup-form">Your password:</label>
+                    <label for="password1" form="signup-form">Your password<span class="red">*</span>:</label>
                     {{ form.password1 }}
                 </div>
+                <span class="small"><img class="info" src="../static/images/info.svg" alt="Password information">The password mininum length is 8 characters and maximun is 22 characters</span>
                 <div class="input-group">
                     <img class="icon input-icon" src="../static/images/key.svg" alt="Password icon">
-                    <label for="password2" form="signup-form" class="label">Confirm your password:</label>
+                    <label for="password2" form="signup-form" class="label">Confirm your password<span class="red">*</span>:</label>
                     {{ form.password2 }}
                 </div>
+                <div id="error" class="error">{{error}}</div>
                 <input type="submit" class="submit" value="Signup">
             </form>
+            <div class="redirect">
+                <br>
+                Already have an account?&nbsp;<a href='/users' class="link">Login</a>
+                <br>
+                <a href="forgot_password" class="link">Forgot password?</a>
+            </div>
         </div>
-    </div>
-    <div class="redirect">
-        Already have an account?&nbsp;<a href='/users' class="link">Login</a>
-        <br><br>
-        <a href="forgot_password" class="link">Forgot password?</a>
     </div>
     <!-- custom JS -->
     <script src="../static/javascripts/scripts.js" defer></script>
