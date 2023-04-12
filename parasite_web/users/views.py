@@ -25,8 +25,8 @@ def loginUser(request):
                 user = User.objects.get(email=email)
                 # The account is activated and the password is correct
                 if user.is_active and check_password(password, user.password):
-                    request.session['user']=user.email
-                    return redirect('/game/')
+                    request.session['user']=email
+                    return redirect('/')
                 # The password is incorrect
                 elif not check_password(password, user.password):
                     error = 'You entered an incorrect email or password.'
