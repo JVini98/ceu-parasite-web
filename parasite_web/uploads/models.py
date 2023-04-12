@@ -26,16 +26,3 @@ if (not Parasite.objects.exists()):
     Parasite(name="Taenia").save()
     Parasite(name="Trichuris trichura").save()
     Parasite(name="Hookworm").save()
-
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    surname1 = models.CharField(max_length=50)
-    surname2 = models.CharField(max_length=50, blank=True)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
-
-    def __str__(self):
-        return str(self.pk)
-
-if (not User.objects.exists()):
-    User(name="Patricia", surname1="Herrera", surname2="", email="patricia@gmail.com", password="patricia1234").save()

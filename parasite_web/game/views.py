@@ -23,12 +23,12 @@ def manipulateImage(request):
                                                 width=dict["width"], 
                                                 height=dict["height"], 
                                                 user=user,
-                                                photograph=Photograph.objects.get(pk=4),
+                                                photograph=Photograph.objects.get(pk=1),
                                                 parasite=retrieveIdParasite(dict["annotation"])
                                                 )
                 identification.save()
             return JsonResponse({'message': "Successfully sent to the server"})
     else:
-        image = Photograph.objects.get(pk=4)
+        image = Photograph.objects.get(pk=1)
         parasites = Parasite.objects.values_list('name', flat=True)
         return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})
