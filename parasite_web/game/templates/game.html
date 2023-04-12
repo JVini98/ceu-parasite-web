@@ -4,42 +4,87 @@
     <title>Parasites game</title>
     <meta charset="UTF-8">
     <meta name="description" content="Parasites application">
-    <meta name="keywords" content="HTML, CSS, JavaScript, Pyhton, Django">
-    <meta name="author" content="">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Python, Django, Cropper">
+    <meta name="author" content="Patricia Herrera">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- favicon -->
     <link rel="icon" type="image/png" href="../static/images/favicon.png">
+    <!-- Font Awesome -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- cropper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <!-- bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <!-- custom css -->
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="../static/css/slider.css">
     <link rel="stylesheet" href="../static/css/crop.css">
   </head>
   <body>
-    <h1>Identify the parasites</h1>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">
+        <img src="../static/images/favicon.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="Your Logo">
+        Parasites Web
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/uploads">Uploads</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/game">Game</a>
+        </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user"></i> {{email}}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="/users/">Sign in</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/users/register">Sign up</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Content -->
+    <nav class="navbar navbar-light bg-light mb-4">
+      <div class="container">
+        <h1>Identify the parasites</h1>
+      </div>
+    </nav>
     <div id="alertBox"></div>
     <div id="imageContainer" class="marginBotton">
       <img id="gameImage" src={{image.path.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
     </div>
-    <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Found!</button>
+    <div class="buttons">
+      <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Found!</button>
+    </div>
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Parasite detected!</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
             <form id="annotationForm" action="">
               <div id="parasitesForm"></div>
               <label for="annotation" form="annotationForm">What parasite is it?</label>
-              <!-- <input id="annotation" type="text" placeholder="Ameba" required>-->
               <select id="annotation" name="parasites">
               {% for parasite in parasites %}
                 <option value="{{parasite|safe}}">{{ parasite|safe }}</option>
@@ -48,18 +93,36 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             <button id="saveButton" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <div id="parasitesResponse"></div>
+    <div class="slider-container">
+      <div id="slider" class="slider">
+      </div>
+      <button class="slider-button slider-button-left">&#8249;</button>
+      <button class="slider-button slider-button-right">&#8250;</button>
+    </div>
+    <!-- <div id="parasitesResponse"></div> -->
     <form id="jsonForm" action="" enctype="multipart/form-data">
       {% csrf_token %}
     </form>
-    <button id="sendButton" type="button" class="btn btn-info btn-lg">Send</button>
-
+    <div class="buttons">
+      <button id="sendButton" type="button" class="btn btn-info btn-lg">Send</button>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-dark py-3">
+      <div class="container text-center">
+        <span class="text-white">Copyright &copy; Parasites Web
+        <script>document.write(new Date().getFullYear());</script>
+        </span>
+      </div>
+    </footer>
+    <!-- Bootstrap JS and Popper-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- custom JS -->
     <script type="text/javascript" src="../static/javascripts/crop.js"></script>
   </body>
