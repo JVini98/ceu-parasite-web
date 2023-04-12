@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class User(models.Model):
@@ -7,7 +8,7 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
     is_active = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
+    last_login = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.pk)

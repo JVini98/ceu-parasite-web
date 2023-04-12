@@ -1,5 +1,6 @@
 from django.db import models
-from uploads.models import Photograph, Parasite, User
+from uploads.models import Photograph, Parasite
+from users.models import User
 
 
 # Create your models here.
