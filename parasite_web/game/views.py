@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from uploads.models import Photograph, Parasite
@@ -10,6 +10,7 @@ import json
 def retrieveIdParasite(nameSelected):
     return Parasite.objects.get(name=nameSelected)
 
+# Receive the identifications send by the user
 def manipulateImage(request):
     if request.method == "POST":
         jsonReceived = request.POST.get('json')
@@ -29,6 +30,12 @@ def manipulateImage(request):
                 identification.save()
             return JsonResponse({'message': "Successfully sent to the server"})
     else:
-        image = Photograph.objects.get(pk=1)
-        parasites = Parasite.objects.values_list('name', flat=True)
-        return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})
+        # If the user is logged in
+        if ('user' in request.session):
+            image = Photograph.objects.get(pk=1)
+            parasites = Parasite.objects.values_list('name', flat=True)
+            return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})
+        # Display error message
+        else: 
+            error = 'To access the game section, you need to login'
+            return redirect(f'/?error={error}')

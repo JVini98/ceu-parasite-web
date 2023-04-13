@@ -60,10 +60,11 @@
 		</nav>
 		<div class="jumbotron jumbotron-fluid py-5">
 			<div class="container text-center py-0">
-			<h1 class="display-5">Welcome to Parasites Web</h1>
-			<p class="lead mb-0">The main purpose of this website is to help <b>pharmaceutical students</b> learn about parasites.</p>
-			<p class="lead mb-0">For that task, we have developed a <b>new AI</b> that recognizes parasites and a <b>game</b> to help train that AI with your knowledge.</p>
-			<p class="lead mb-0">In order to use it, you need to <a href='/users/register' class="link">register</a> or <a href='/users/' class="link">login</a> into your account.</p>
+				{{message|safe}}
+				<h1 class="display-5">Welcome to Parasites Web</h1>
+				<p class="lead mb-0">The main purpose of this website is to help <b>pharmaceutical students</b> learn about parasites.</p>
+				<p class="lead mb-0">For that task, we have developed a <b>new AI</b> that recognizes parasites and a <b>game</b> to help train that AI with your knowledge.</p>
+				<p class="lead mb-0">In order to use it, you need to <a href='/users/register' class="link">register</a> or <a href='/users/' class="link">login</a> into your account.</p>
 			</div>
 		</div>
 		<!-- Content -->
@@ -71,7 +72,7 @@
 		<div class="row">
 			<div class="col-md-6 mb-3">
 			<div class="card">
-				<img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Uploads image">
+				<img class="card-img-top" src="../static/images/AI.jpg" width="350" height="320" alt="Uploads image">
 				<div class="card-body">
 				<h5 class="card-title">Uploads</h5>
 				<p class="card-text text-justify">You can provide an image to the AI and it will try to identify it. If it is successfull, the AI will return you the name, otherwise, it will be added to the game so users can identify it.</p>
@@ -80,7 +81,7 @@
 			</div>
 			<div class="col-md-6 mb-3">
 			<div class="card">
-				<img class="card-img-top" src="../static/images/game.jpg" width="350" alt="Game image">
+				<img class="card-img-top" src="../static/images/game.jpg" width="350" height="320" alt="Game image">
 				<div class="card-body">
 				<h5 class="card-title">Game</h5>
 				<p class="card-text text-justify">In this game you will be given a picture from which you can identify several parasites and name them. Your contribution will be considered among many others to improve the AI.</p>
