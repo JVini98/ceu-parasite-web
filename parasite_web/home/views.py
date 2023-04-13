@@ -8,8 +8,8 @@ def home(request):
         formatMessage = '<div class="alert alert-danger" role="alert">' + message + '</div>'
         return render(request, 'home.html', {'message': formatMessage})
     # Display message when the user is logged in
-    elif (request.session['user']): 
-        message = "Welcome back, <b>" + request.session['user'] + "</b>! We're glad to see you again." 
+    elif ('user' in request.session): 
+        message = "Welcome back, <b>" + request.session['user'] + "</b>! We are glad to see you again." 
         formatMessage = '<div class="alert alert-success alert-dismissible fade show" role="alert">' + message + '</div>'
         return render(request, 'home.html', {'message': formatMessage})
     else: 
