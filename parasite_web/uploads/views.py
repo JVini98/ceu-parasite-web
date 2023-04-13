@@ -21,8 +21,14 @@ def upload_file(request):
             annotated_img = annotate_parasites(parasite_img)
             return render(request=request, template_name="uploads/show.html", context={"img_uri": to_data_uri(annotated_img)})
     else:
-        form = PhotographForm()
-        return render(request=request, template_name="uploads/form.html", context={'form': form})
+        # If the user is logged in
+        if ('user' in request.session):
+            form = PhotographForm()
+            return render(request=request, template_name="uploads/form.html", context={'form': form})
+        # Display error message
+        else: 
+            error = 'To access the uploads section, you need to login'
+            return redirect(f'/?error={error}')
 
 
 def to_data_uri(numpy_img):
