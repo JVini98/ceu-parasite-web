@@ -6,10 +6,12 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from .token import account_activation_token
+from django.conf import settings
 
 import urllib.parse
+import threading
 
 # Create your views here.
 # Login User
@@ -100,12 +102,15 @@ def activateEmail(request, user, email, subject):
         'action': subject,
         'protocol': 'https' if request.is_secure() else 'http'
     })
-    email = EmailMessage(mail_subject, message, to=[email])
-    email.content_subtype='html'
-    if email.send():
-        return True
-    else:
-        return False
+    # Send it async
+    threading.Thread(target=send_mail, args=(mail_subject, message, settings.EMAIL_FROM, [email]), kwargs={'fail_silently': True, 'html_message': message}).start()
+    # Send it sync
+    # email = EmailMessage(mail_subject, message, to=[email])
+    # email.content_subtype='html'
+    # if email.send():
+    #     return True
+    # else:
+    #     return False
 
 # Check if user is valid
 def checkUser(form):
@@ -137,15 +142,17 @@ def registerUser(request):
             valid, user, error = checkUser(form)
             # If all the checks of the user were alright
             if valid: 
-                status = activateEmail(request, user, form.cleaned_data.get("email"), "Activate")
+                # status = activateEmail(request, user, form.cleaned_data.get("email"), "Activate")
+                activateEmail(request, user, form.cleaned_data.get("email"), "Activate")
+                return render(request, 'email-activate.html', {'email': form.cleaned_data.get("email")})
                 # The email was successfully sent to the user
-                if status:
-                    return render(request, 'email-activate.html', {'email': form.cleaned_data.get("email")})
-                # The email was not sent to the user
-                else: 
-                    title = "Sending Email Error"
-                    message = "We were not able to send you the confirmation email. Please try again later."
-                    return redirect(f'/users/error?title={title}&message={message}')
+                # if status:
+                #     return render(request, 'email-activate.html', {'email': form.cleaned_data.get("email")})
+                # # The email was not sent to the user
+                # else: 
+                #     title = "Sending Email Error"
+                #     message = "We were not able to send you the confirmation email. Please try again later."
+                #     return redirect(f'/users/error?title={title}&message={message}')
             # Display the error that happen during registration
             else: 
                 if error=="Email":
@@ -172,15 +179,17 @@ def forgotPassword(request):
             # Try to find that user register in the DB
             try: 
                 user = User.objects.get(email=email)
-                status = activateEmail(request, user, email, "Reset")
-                # The email was successfully sent to the user
-                if status: 
-                    return render(request, 'email-password.html', {'email': email})
-                # The email was not sent to the user
-                else: 
-                    title = "Sending Email Error"
-                    message = "We were not able to send you the reset password email. Please try again later."
-                    return redirect(f'/users/error?title={title}&message={message}')
+                activateEmail(request, user, email, "Reset")
+                return render(request, 'email-password.html', {'email': email})
+                # status = activateEmail(request, user, email, "Reset")
+                # # The email was successfully sent to the user
+                # if status: 
+                #     return render(request, 'email-password.html', {'email': email})
+                # # The email was not sent to the user
+                # else: 
+                #     title = "Sending Email Error"
+                #     message = "We were not able to send you the reset password email. Please try again later."
+                #     return redirect(f'/users/error?title={title}&message={message}')
             except:
                 error = "You need to introduce a registered email."
         # There was no email received
