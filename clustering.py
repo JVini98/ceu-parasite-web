@@ -55,6 +55,8 @@ def box_iou(boxes1, boxes2):
     iou = inter / union
     return iou
 
+def iou_to_distance(matrix):
+    return 1 - matrix
 
 if __name__ == "__main__":
     boxes1= np.array([
@@ -73,5 +75,8 @@ if __name__ == "__main__":
     ])
     # Ious contiene todas las comparaciones de boxes1 con boxes2 en una matriz de tamaño 5 x 5
     ious = box_iou(boxes1, boxes2)
-    print(ious.shape)
+    print("The IoU matrix is: " + str(ious.shape))
     print(ious)
+    distance = iou_to_distance(ious)
+    print("The distance matrix is: " + str(distance.shape))
+    print(distance)
