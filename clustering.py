@@ -57,7 +57,6 @@ def box_iou(boxes1, boxes2):
 
 
 if __name__ == "__main__":
-    # Boxes1 representa dos boxes. Creamos una matriz de tamaño 2 x 4
     boxes1= np.array([
         image1Coord,
         image2Coord,
@@ -65,7 +64,6 @@ if __name__ == "__main__":
         image4Coord,
         image5Coord
     ])
-    # Boxes2 representa tres boxes. Creamos una matriz de tamaño 3 x 4
     boxes2 = np.array([
         image1Coord,
         image2Coord,
@@ -73,7 +71,7 @@ if __name__ == "__main__":
         image4Coord,
         image5Coord
     ])
-    # Ious contiene todas las comparaciones de boxes1 con boxes2 en una matriz de tamaño 2 x 3
+    # Ious contiene todas las comparaciones de boxes1 con boxes2 en una matriz de tamaño 5 x 5
     ious = box_iou(boxes1, boxes2)
     print(ious.shape)
     print(ious)
