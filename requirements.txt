@@ -1,3 +1,5 @@
 six
 pillow
 numpy
+torch
+torchvision
