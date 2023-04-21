@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from torchvision import ops
+from sklearn.cluster import DBSCAN
 
 # image = [top-leftx, top-lefty, width, height]
 image1 = ["1149.7215179505479", "725.0646330096754", "516.6119994320322", "290.59424968051815"]
@@ -58,6 +59,11 @@ def box_iou(boxes1, boxes2):
 def iou_to_distance(matrix):
     return 1 - matrix
 
+def clustering(distance_matrix):
+    dbscan = DBSCAN(eps=0.6, min_samples=2, metric='precomputed')
+    labels = dbscan.fit_predict(distance_matrix)
+    return labels
+
 if __name__ == "__main__":
     boxes1= np.array([
         image1Coord,
@@ -80,3 +86,6 @@ if __name__ == "__main__":
     distance = iou_to_distance(ious)
     print("The distance matrix is: " + str(distance.shape))
     print(distance)
+    cluster = clustering(distance)
+    print("The cluster is: ")
+    print(cluster)
