@@ -10,8 +10,7 @@ class Identification(models.Model):
     width = models.CharField(max_length=20)
     height = models.CharField(max_length=20)
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     photograph = models.ForeignKey(Photograph, on_delete=models.CASCADE)
     parasite = models.ForeignKey(Parasite, on_delete=models.CASCADE)
     

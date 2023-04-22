@@ -24,7 +24,7 @@ def manipulateImage(request):
                                                 width=dict["width"], 
                                                 height=dict["height"], 
                                                 user=user,
-                                                photograph=Photograph.objects.get(pk=2),
+                                                photograph=Photograph.objects.first(),
                                                 parasite=retrieveIdParasite(dict["annotation"])
                                                 )
                 identification.save()
@@ -32,7 +32,7 @@ def manipulateImage(request):
     else:
         # If the user is logged in
         if ('user' in request.session):
-            image = Photograph.objects.get(pk=2)
+            image = Photograph.objects.first()
             parasites = Parasite.objects.values_list('name', flat=True)
             return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})
         # Display error message

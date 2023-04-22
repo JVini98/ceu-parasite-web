@@ -9,14 +9,19 @@ from PIL import Image, ImageDraw
 
 from .forms import PhotographForm
 from .models import Photograph
+from users.models import User
 
 
 # TODO: raises ValueError("not enough image data") with small images
 def upload_file(request):
     if request.method == "POST":
         form = PhotographForm(data=request.POST, files=request.FILES)
+        user = User.objects.get(email=request.session["user"])
         if form.is_valid():
-            parasite_img_model: Photograph = form.save()
+            photograph = form.save(commit=False)
+            photograph.user = user
+            photograph.save()
+            parasite_img_model: Photograph = photograph
             parasite_img = Image.open(parasite_img_model.path)
             annotated_img = annotate_parasites(parasite_img)
             return render(request=request, template_name="uploads/show.html", context={"img_uri": to_data_uri(annotated_img)})
