@@ -4,11 +4,23 @@ from django.template import loader
 from uploads.models import Photograph, Parasite
 from users.models import User
 from .models import Identification
+from .forms import ReportPhotographForm
 import json
 
 # Create your views here.
 def retrieveIdParasite(nameSelected):
     return Parasite.objects.get(name=nameSelected)
+
+# A user has reported a photograph
+def reportedPhotograph(request):
+    if request.method == "POST":
+        form = ReportPhotographForm(request.POST or None)
+        if form.is_valid():
+            pkImage = form.cleaned_data['image_reported']
+            image = Photograph.objects.get(id=pkImage)
+            image.reported = True
+            image.save()
+            return redirect('/game')
 
 # Receive the identifications send by the user
 def manipulateImage(request):
@@ -34,7 +46,8 @@ def manipulateImage(request):
         if ('user' in request.session):
             image = Photograph.objects.first()
             parasites = Parasite.objects.values_list('name', flat=True)
-            return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites})
+            form = ReportPhotographForm()
+            return render(request=request, template_name="game.html", context={'image': image, 'parasites': parasites, 'form': form})
         # Display error message
         else: 
             error = 'To access the game section, you need to login'

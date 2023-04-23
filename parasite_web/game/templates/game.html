@@ -71,6 +71,13 @@
       </div>
     </nav>
     <div id="alertBox"></div>
+    <form method="post" enctype="multipart/form-data" action="{% url 'reported' %}">
+      {% csrf_token %}
+      {{ form.image_reported }}
+      <div class="buttons">
+        <button id="reportButton" type="submit" class="btn btn-danger btn-lg marginBotton" name="image_reported" value="{{image}}">Report photograph</button>
+      </div>
+    </form>
     <div id="imageContainer" class="marginBotton">
       <img id="gameImage" src={{image.path.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
     </div>
