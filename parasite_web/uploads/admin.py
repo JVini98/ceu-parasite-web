@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Photograph, Parasite, Region
 
 class PhotographAdmin(admin.ModelAdmin):
-    list_display = ('id', 'path', 'timestamp', 'user')
+    list_display = ('id', 'path', 'timestamp', 'user', 'reported')
 
 class ParasiteAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
