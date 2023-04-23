@@ -16,18 +16,18 @@ class Parasite(models.Model):
     def __str__(self):
         return str(self.pk)
 
-if (not Parasite.objects.exists()):
-    Parasite(name="Entamoeba").save()
-    Parasite(name="Ascaris lumbricoides").save()
-    Parasite(name="Balantidium coli").save()
-    Parasite(name="Diphyllobothrium latum").save()
-    Parasite(name="Entamoeba coli").save()
-    Parasite(name="Enterobius vermicularis").save()
-    Parasite(name="Giardia").save()
-    Parasite(name="Hymenolepis nana").save()
-    Parasite(name="Taenia").save()
-    Parasite(name="Trichuris trichura").save()
-    Parasite(name="Hookworm").save()
+# if (not Parasite.objects.exists()):
+#     Parasite(name="Entamoeba").save()
+#     Parasite(name="Ascaris lumbricoides").save()
+#     Parasite(name="Balantidium coli").save()
+#     Parasite(name="Diphyllobothrium latum").save()
+#     Parasite(name="Entamoeba coli").save()
+#     Parasite(name="Enterobius vermicularis").save()
+#     Parasite(name="Giardia").save()
+#     Parasite(name="Hymenolepis nana").save()
+#     Parasite(name="Taenia").save()
+#     Parasite(name="Trichuris trichura").save()
+#     Parasite(name="Hookworm").save()
 
 class Region(models.Model):
     coordinateX = models.CharField(max_length=20)
