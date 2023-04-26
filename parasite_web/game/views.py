@@ -46,9 +46,9 @@ def manipulateImage(request):
     else:
         # If the user is logged in
         if ('user' in request.session):
-            image = Photograph.objects.get(pk=4)
+            image = Photograph.objects.first()
             imageDisplay, executed = deleteEXIF(image)
-            # Image with metadata (JPEG)
+            # Image with EXIF metadata (JPEG)
             if executed:
                 buffer = BytesIO()
                 imageDisplay.save(buffer, format="JPEG")
@@ -59,12 +59,12 @@ def manipulateImage(request):
                 contents_base64 = base64.b64encode(contents_bytes).decode()
                 parasites = Parasite.objects.values_list('name', flat=True)
                 form = ReportPhotographForm()
-                return render(request=request, template_name="game.html", context={"image": f"data:{mime_type};base64,{contents}", 'parasites': parasites, 'form': form})
-            # Image with no EXIF Metadata does not change
+                return render(request=request, template_name="game.html", context={"image": f"data:{mime_type};base64,{contents_base64}", 'parasites': parasites, 'form': form})
+            # Image with no EXIF metadata
             else: 
                 parasites = Parasite.objects.values_list('name', flat=True)
                 form = ReportPhotographForm()
-                return render(request=request, template_name="game.html", context={"image": imageDisplay, 'parasites': parasites, 'form': form})
+                return render(request=request, template_name="game.html", context={"image": imageDisplay.path.url, 'parasites': parasites, 'form': form})
         # Display error message
         else: 
             error = 'To access the game section, you need to login'
