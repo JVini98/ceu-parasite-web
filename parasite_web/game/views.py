@@ -25,7 +25,7 @@ def getPhotographLessAnnotations():
     photographsWithAnnotations = Identification.objects.values('photograph').annotate(count=Count('photograph')).order_by('count')
     allPhotographs = Photograph.objects.all()
     
-    # Find the photograph with the least number of annotations
+    # Find the photograph with the least number of annotations or the first with no annotations
     photographWithLeastAnnotations = None
     leastAnnotationsCount = float('inf')
     for photograph in allPhotographs:
@@ -36,12 +36,7 @@ def getPhotographLessAnnotations():
                 break
         if annotationsCount < leastAnnotationsCount:
             leastAnnotationsCount = annotationsCount
-            photographWithLeastAnnotations = photograph
-    
-    # If there are no annotated photographs, return the first photograph
-    if leastAnnotationsCount == float('inf'):
-        photographWithLeastAnnotations = allPhotographs.first()
-    
+            photographWithLeastAnnotations = photograph    
     return photographWithLeastAnnotations
 
 # A user has reported a photograph
