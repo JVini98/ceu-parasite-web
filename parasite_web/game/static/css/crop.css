@@ -1,13 +1,3 @@
-#cropButton, #sendButton, #reportButton{
-    /* float: right; */
-    margin-right: 30px;
-}
-
-#sendButton{
-    /* float: right; */
-    margin-bottom: 15px;
-}
-
 .buttons{
     text-align: right;
 }
@@ -25,6 +15,18 @@
 
 .margin{
     margin-top:15px;
+    margin-bottom: 15px;
+}
+
+.hidden{
+    display: none;
+}
+
+#cropButton, #sendButton, #reportButton{
+    margin-right: 30px;
+}
+
+#sendButton{
     margin-bottom: 15px;
 }
 

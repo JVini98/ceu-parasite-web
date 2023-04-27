@@ -5,13 +5,28 @@ from uploads.models import Photograph, Parasite
 from users.models import User
 from .models import Identification
 from .forms import ReportPhotographForm
+from django.db.models import Count, OuterRef, Subquery
 from PIL import Image
 from io import BytesIO
-import json, piexif, binascii, base64
+import json, piexif, base64
 
 # Create your views here.
-def retrieveIdParasite(nameSelected):
+# Retrieve the parasite instance
+def retrieveParasite(nameSelected):
     return Parasite.objects.get(name=nameSelected)
+
+# Retrieve the parasite instance
+def retrievePhotograph(idReceived):
+    return Photograph.objects.get(id=idReceived)
+
+# Show the image with less annotations
+def getPhotographLessAnnotations():
+    photograph_count = Identification.objects.values('photograph').annotate(count=Count('photograph')).order_by('count').first()
+    if not photograph_count:
+        photograph = Photograph.objects.first()
+    else:
+        photograph = Photograph.objects.get(id=photograph_count['photograph'])
+    return photograph
 
 # A user has reported a photograph
 def reportedPhotograph(request):
@@ -38,15 +53,15 @@ def manipulateImage(request):
                                                 width=dict["width"], 
                                                 height=dict["height"], 
                                                 user=user,
-                                                photograph=Photograph.objects.get(pk=5),
-                                                parasite=retrieveIdParasite(dict["annotation"])
+                                                photograph=retrievePhotograph(dict["imageID"]),
+                                                parasite=retrieveParasite(dict["annotation"])
                                                 )
                 identification.save()
             return JsonResponse({'message': "Successfully sent to the server"})
     else:
         # If the user is logged in
         if ('user' in request.session):
-            image = Photograph.objects.get(pk=5)
+            image = getPhotographLessAnnotations()
             executed, imageDisplay = deleteEXIF(image)
             # Image with EXIF metadata (JPEG)
             if executed:
@@ -56,10 +71,16 @@ def manipulateImage(request):
                 mime_type = "image/jpeg"
                 contents = buffer.getvalue()
                 contents_base64 = base64.b64encode(contents).decode()
-                imageRender = f"data:{mime_type};base64,{contents_base64}"
+                imageRender = {
+                    'id': image.id,
+                    'path': f"data:{mime_type};base64,{contents_base64}"
+                }
             # Image with no EXIF metadata
             else: 
-                imageRender = imageDisplay.path.url
+                imageRender = {
+                    'id': image.id,
+                    'path': imageDisplay.path.url
+                }
             parasites = Parasite.objects.values_list('name', flat=True)
             form = ReportPhotographForm()
             return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form})
