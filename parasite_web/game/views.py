@@ -5,7 +5,7 @@ from uploads.models import Photograph, Parasite
 from users.models import User
 from .models import Identification
 from .forms import ReportPhotographForm
-from django.db.models import Count, OuterRef, Subquery
+from django.db.models import Count
 from PIL import Image
 from io import BytesIO
 import json, piexif, base64
@@ -19,14 +19,30 @@ def retrieveParasite(nameSelected):
 def retrievePhotograph(idReceived):
     return Photograph.objects.get(id=idReceived)
 
-# Show the image with less annotations
+# Show the photograph with the least number of annotations
 def getPhotographLessAnnotations():
-    photograph_count = Identification.objects.values('photograph').annotate(count=Count('photograph')).order_by('count').first()
-    if not photograph_count:
-        photograph = Photograph.objects.first()
-    else:
-        photograph = Photograph.objects.get(id=photograph_count['photograph'])
-    return photograph
+    # Retrieve photographs with and without annotations
+    photographsWithAnnotations = Identification.objects.values('photograph').annotate(count=Count('photograph')).order_by('count')
+    allPhotographs = Photograph.objects.all()
+    
+    # Find the photograph with the least number of annotations
+    photographWithLeastAnnotations = None
+    leastAnnotationsCount = float('inf')
+    for photograph in allPhotographs:
+        annotationsCount = 0
+        for annotatedPhotograph in photographsWithAnnotations:
+            if annotatedPhotograph['photograph'] == photograph.id:
+                annotationsCount = annotatedPhotograph['count']
+                break
+        if annotationsCount < leastAnnotationsCount:
+            leastAnnotationsCount = annotationsCount
+            photographWithLeastAnnotations = photograph
+    
+    # If there are no annotated photographs, return the first photograph
+    if leastAnnotationsCount == float('inf'):
+        photographWithLeastAnnotations = allPhotographs.first()
+    
+    return photographWithLeastAnnotations
 
 # A user has reported a photograph
 def reportedPhotograph(request):
