@@ -15,7 +15,7 @@ import json, piexif, base64
 def retrieveParasite(nameSelected):
     return Parasite.objects.get(name=nameSelected)
 
-# Retrieve the parasite instance
+# Retrieve the photograph instance
 def retrievePhotograph(idReceived):
     return Photograph.objects.get(id=idReceived)
 
