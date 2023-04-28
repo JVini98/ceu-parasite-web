@@ -70,7 +70,6 @@
         <h1>Identify the parasites</h1>
       </div>
     </nav>
-    <div id="alertBox"></div>
     <form method="post" enctype="multipart/form-data" action="{% url 'reported' %}">
       {% csrf_token %}
       {{ form.image_reported }}
@@ -79,7 +78,9 @@
       </div>
     </form>
     <div id="imageContainer" class="marginBotton">
-      <img id="gameImage" src={{image.path.url}} alt="Image to detect parasites" width="229.5px" height="408px"/>
+      <!-- <img id="gameImage" src={{image.path.url}} alt="Image to detect parasites" width="229.5px" height="408px"/> -->
+      <img id="gameImage" src={{image.path}} alt="Image to detect parasites" width="229.5px" height="408px"/>
+      <p id="imageID" class="hidden">{{image.id}}</p>
     </div>
     <div class="buttons">
       <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Found!</button>
@@ -120,6 +121,7 @@
     <form id="jsonForm" action="" enctype="multipart/form-data">
       {% csrf_token %}
     </form>
+    <div id="alertBox"></div>
     <div class="buttons">
       <button id="sendButton" type="button" class="btn btn-info btn-lg">Send</button>
     </div>

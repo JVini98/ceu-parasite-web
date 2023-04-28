@@ -6,6 +6,7 @@ const parasitesForm = document.getElementById('parasitesForm');
 const jsonForm = document.getElementById('jsonForm');
 const annotationForm = document.getElementById('annotation');
 const alertBox = document.getElementById('alertBox');
+const imageID = document.getElementById('imageID');
 const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
 // working with the slider
@@ -66,7 +67,7 @@ buttonSave.addEventListener('click', ()=>{
 // create parasite object
 function createParasiteObj(pAnnotation, pCoordX, pCoordY, pWidth, pHeight){
   let parasite = {};
-  parasite.url = image.src;
+  parasite.imageID = imageID.innerHTML;
   parasite.annotation = pAnnotation;
   parasite.coordinateX = pCoordX;
   parasite.coordinateY = pCoordY;
