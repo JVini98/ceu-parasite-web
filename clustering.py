@@ -98,6 +98,20 @@ if __name__ == "__main__":
     cluster_labels = clustering(combined_distance)
     print("The labels are: ")
     print(cluster_labels)
+    # Get the number of clusters that have been detected
+    number_clusters = max(cluster_labels)
+    print("The number of clusters is " + str(number_clusters))
+    # Create an array with as many positions as clusters (not including noise cluster)
+    images_to_final_image = []
+    for index in range(number_clusters+1):
+        images_to_final_image.append([])
+    print("Inicial array " + images_to_final_image)
+    # Loop through the clusters
+    for index, cluster in enumerate(cluster_labels):
+        # Real cluster
+        if cluster >= 0:
+            images_to_final_image[cluster].append(index)
+    print("Filled array " + images_to_final_image)
 
     # Plot the boxes with the labels. Each color represents a different cluster. Red is the noise cluster.
     import matplotlib.pyplot as plt
