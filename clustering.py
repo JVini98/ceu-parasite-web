@@ -67,6 +67,20 @@ def clustering(distance_matrix):
     labels = dbscan.fit_predict(distance_matrix)
     return labels
 
+def median_xywh(list_xywh):
+    # Sort the numbers in ascending order
+    sorted_list = sorted(list_xywh)  
+    # Get the length of the sorted list
+    length_list = len(sorted_list)  
+    # If the length is even
+    if length_list % 2 == 0:  
+        median = (sorted_list[length_list // 2 - 1] + sorted_list[length_list // 2]) / 2
+    # If the length is odd
+    else:  
+        median = sorted_list[length_list // 2]
+
+    print("The median is:", median)
+
 if __name__ == "__main__":
     # Let's work from the original coordinates in x, y, w, h format and with string type
     box_coordinates_string = [image1, image2, image3, image4, image5, image6, image7]
@@ -110,8 +124,11 @@ if __name__ == "__main__":
     for index, cluster in enumerate(cluster_labels):
         # Real cluster
         if cluster >= 0:
-            images_to_final_image[cluster].append(index)
+            images_to_final_image[cluster].append(box_coordinates_string[index])
     print("Filled array " + str(images_to_final_image))
+    # Calculate the median for each cluster
+    # for cluster in images_to_final_image:
+    #     median_xywh(cluster)
 
     # Plot the boxes with the labels. Each color represents a different cluster. Red is the noise cluster.
     import matplotlib.pyplot as plt
