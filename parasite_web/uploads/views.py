@@ -103,7 +103,7 @@ def draw_bounding_box_on_image(image,
         text_bottom -= text_height - 2 * margin
 
 
-def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1):
+def draw_boxes(image, boxes, class_names, scores, max_boxes=1, min_score=0.1):
     """Overlay labeled boxes on an image with formatted scores and label names."""
     colors = list(ImageColor.colormap.values())
 
@@ -115,7 +115,7 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1):
         font = ImageFont.load_default()
 
     for i in range(min(boxes.shape[0], max_boxes)):
-        print(scores[i], min_score)
+
         if scores[i] >= min_score:
             ymin, xmin, ymax, xmax = tuple(boxes[i])
             display_str = "{}: {}%".format(class_names[i], 100 * scores[i])
@@ -161,7 +161,7 @@ def annotate_parasites(parasite_img):
 
     SERVER = '13.48.86.83:8500'
 
-    parasite_img_np = np.asarray(parasite_img)
+    parasite_img_np = np.array(parasite_img)
 
     request = PredictRequest()
     request.model_spec.name = "saved_model"
@@ -189,8 +189,10 @@ def annotate_parasites(parasite_img):
                    for key, value in output_dict.items()}
     output_dict['num_detections'] = num_detections
 
-    annotated_img = draw_boxes(parasite_img_np, output_dict['detection_boxes'], map_classes(
+    annotated_img_np = draw_boxes(parasite_img_np, output_dict['detection_boxes'], map_classes(
         output_dict['detection_classes']), output_dict['detection_scores'])
+
+    annotated_img = Image.fromarray(annotated_img_np)
 
     img_drawer = ImageDraw.Draw(annotated_img)
     img_drawer.line((0, 0) + annotated_img.size, fill=128)
