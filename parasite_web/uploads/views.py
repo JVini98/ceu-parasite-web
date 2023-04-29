@@ -159,7 +159,7 @@ def annotate_parasites(parasite_img):
 
     matplotlib.use('TkAgg')
 
-    SERVER = '16.16.192.89:8500'
+    SERVER = '13.48.86.83:8500'
 
     request = PredictRequest()
     request.model_spec.name = "saved_model"
