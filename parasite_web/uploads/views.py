@@ -161,11 +161,13 @@ def annotate_parasites(parasite_img):
 
     SERVER = '13.48.86.83:8500'
 
+    parasite_img_np = np.asarray(parasite_img)
+
     request = PredictRequest()
     request.model_spec.name = "saved_model"
     request.model_spec.signature_name = "serving_default"
     request.inputs['input_tensor'].CopyFrom(
-        tf.make_tensor_proto(parasite_img[np.newaxis, :, :, :]))
+        tf.make_tensor_proto(parasite_img_np[np.newaxis, :, :, :]))
 
     channel = grpc.insecure_channel(
         SERVER,
@@ -187,7 +189,7 @@ def annotate_parasites(parasite_img):
                    for key, value in output_dict.items()}
     output_dict['num_detections'] = num_detections
 
-    annotated_img = draw_boxes(parasite_img, output_dict['detection_boxes'], map_classes(
+    annotated_img = draw_boxes(parasite_img_np, output_dict['detection_boxes'], map_classes(
         output_dict['detection_classes']), output_dict['detection_scores'])
 
     img_drawer = ImageDraw.Draw(annotated_img)
