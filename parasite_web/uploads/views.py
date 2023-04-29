@@ -157,7 +157,7 @@ def map_classes(classes):
 def annotate_parasites(parasite_img):
     # TODO: to be modified to talk with the AI
 
-    matplotlib.use('TkAgg')
+    # matplotlib.use('TkAgg')
 
     SERVER = '13.48.86.83:8500'
 
