@@ -1,8 +1,9 @@
 from parasite_web.celery import app as celery_app
 from .models import Identification
 from django.db.models import Count
+from .clustering import get_clusters_per_image
 
-identifications = []
+identifications_grouped = []
 
 @celery_app.task
 def launch_clustering():
@@ -16,5 +17,9 @@ def launch_clustering():
     # Get Querysets with the all the identifications per image
     for photograph_valid in photographs_valid:
         identifications_per_image = Identification.objects.filter(photograph=photograph_valid['photograph']).values('coordinateX', 'coordinateY', 'width', 'height', 'parasite')
-        identifications.append(identifications_per_image)
-    print(identifications)
+        identifications_grouped.append(identifications_per_image)
+    print(identifications_grouped)
+    for identification_grouped in identifications_grouped:
+        get_clusters_per_image(identification_grouped)
+        print("Lo que se le pasa a cluster es " + str(identification_grouped))
+
