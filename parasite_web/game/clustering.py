@@ -124,11 +124,11 @@ def get_clusters_per_image(identifications_image):
     print("The labels are: ")
     print(cluster_labels)
     # Get the number of clusters that have been detected
-    number_clusters = max(cluster_labels)
+    number_clusters = max(cluster_labels) + 1
     print("The number of clusters is " + str(number_clusters))
     # Create an array with as many positions as clusters (not including noise cluster)
     images_to_final_image = []
-    for index in range(number_clusters+1):
+    for index in range(number_clusters):
         images_to_final_image.append([])
     print("Inicial array " + str(images_to_final_image))
     # Loop through the clusters

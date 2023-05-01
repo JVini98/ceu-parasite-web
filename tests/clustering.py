@@ -13,6 +13,8 @@ image5 = ["495.6243064641784", "408.49842165746287", "531.329735484363", "298.87
 image6 = ["1000", "1700", "200", "100"]
 image7 = ["1050", "1650", "150", "110"]
 bbox_labels = ["A", "B", "C", "C", "A", "C", "C"]
+# Dictionary containing the final cluster's labels
+labels_cluster = {}
 
 # Define a function to transform bbox format
 def xywh_to_xyxy(bbox):
@@ -126,11 +128,11 @@ if __name__ == "__main__":
     print("The labels are: ")
     print(cluster_labels)
     # Get the number of clusters that have been detected
-    number_clusters = max(cluster_labels)
+    number_clusters = max(cluster_labels) + 1
     print("The number of clusters is " + str(number_clusters))
     # Create an array with as many positions as clusters (not including noise cluster)
     images_to_final_image = []
-    for index in range(number_clusters+1):
+    for index in range(number_clusters):
         images_to_final_image.append([])
     print("Inicial array " + str(images_to_final_image))
     # Loop through the clusters
@@ -138,10 +140,14 @@ if __name__ == "__main__":
         # Real cluster
         if cluster >= 0:
             images_to_final_image[cluster].append(box_coordinates_string[index])
+            # Check if the current label is not in the dictionary to add it
+            if not bbox_labels[index] in labels_cluster:
+                labels_cluster[str(cluster)] = bbox_labels[index]
     print("Filled array " + str(images_to_final_image))
     # Calculate the median for each cluster
-    for cluster in images_to_final_image:
-        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)))
+    for index, cluster in enumerate(images_to_final_image):
+        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)) 
+              + " and the final label is " +  labels_cluster[str(index)])
 
     # Plot the boxes with the labels. Each color represents a different cluster. Red is the noise cluster.
     import matplotlib.pyplot as plt
