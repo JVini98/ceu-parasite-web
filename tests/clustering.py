@@ -13,6 +13,8 @@ image5 = ["495.6243064641784", "408.49842165746287", "531.329735484363", "298.87
 image6 = ["1000", "1700", "200", "100"]
 image7 = ["1050", "1650", "150", "110"]
 bbox_labels = ["A", "B", "C", "C", "A", "C", "C"]
+# Dictionary containing the final cluster's labels
+labels_cluster = {}
 
 # Define a function to transform bbox format
 def xywh_to_xyxy(bbox):
@@ -67,6 +69,33 @@ def clustering(distance_matrix):
     labels = dbscan.fit_predict(distance_matrix)
     return labels
 
+# Calculate the median of each component within a cluster
+def median_component(component_list):
+    # Sort the numbers in ascending order
+    sorted_list = sorted(component_list)  
+    # Get the length of the sorted list
+    length_list = len(sorted_list)  
+    # If the length is even
+    if length_list % 2 == 0:  
+        median = (sorted_list[length_list // 2 - 1] + sorted_list[length_list // 2]) / 2
+    # If the length is odd
+    else:  
+        median = sorted_list[length_list // 2]
+    return median
+
+# Group the components of the images within a cluster to calculate the median
+def median_cluster_xywh(cluster_xywh):
+    coordinate_x = []
+    coordinate_y = []
+    width = []
+    height = []
+    for image in cluster_xywh:
+        coordinate_x.append(float(image[0]))
+        coordinate_y.append(float(image[1]))
+        width.append(float(image[2]))
+        height.append(float(image[3]))
+    return median_component(coordinate_x), median_component(coordinate_y), median_component(width), median_component(height)
+
 if __name__ == "__main__":
     # Let's work from the original coordinates in x, y, w, h format and with string type
     box_coordinates_string = [image1, image2, image3, image4, image5, image6, image7]
@@ -98,6 +127,27 @@ if __name__ == "__main__":
     cluster_labels = clustering(combined_distance)
     print("The labels are: ")
     print(cluster_labels)
+    # Get the number of clusters that have been detected
+    number_clusters = max(cluster_labels) + 1
+    print("The number of clusters is " + str(number_clusters))
+    # Create an array with as many positions as clusters (not including noise cluster)
+    images_to_final_image = []
+    for index in range(number_clusters):
+        images_to_final_image.append([])
+    print("Inicial array " + str(images_to_final_image))
+    # Loop through the clusters
+    for index, cluster in enumerate(cluster_labels):
+        # Real cluster
+        if cluster >= 0:
+            images_to_final_image[cluster].append(box_coordinates_string[index])
+            # Check if the current label is not in the dictionary to add it
+            if not bbox_labels[index] in labels_cluster:
+                labels_cluster[str(cluster)] = bbox_labels[index]
+    print("Filled array " + str(images_to_final_image))
+    # Calculate the median for each cluster
+    for index, cluster in enumerate(images_to_final_image):
+        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)) 
+              + " and the final label is " +  labels_cluster[str(index)])
 
     # Plot the boxes with the labels. Each color represents a different cluster. Red is the noise cluster.
     import matplotlib.pyplot as plt

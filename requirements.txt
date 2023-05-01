@@ -6,3 +6,4 @@ torchvision
 scikit-learn
 matplotlib
 piexif
+celery redis
