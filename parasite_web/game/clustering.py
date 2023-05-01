@@ -4,12 +4,6 @@ import torch
 from torchvision import ops
 from sklearn.cluster import DBSCAN
 
-# Dictionary containing the final cluster's labels
-final_labels = {}
-
-# Array containing the final xywh format and label of the final clusters
-final_clusters = []
-
 # Define a function to transform bbox format
 def xywh_to_xyxy(bbox):
     x, y, w, h = bbox
@@ -82,6 +76,11 @@ def get_clusters_per_image(identifications_image):
     # Define the arrays to work with coordinates and labels
     box_coordinates_string = []
     bbox_labels = []
+    # Dictionary containing the final cluster's labels
+    final_labels = {}
+    # Array containing the final xywh format and label of the final clusters of an image
+    final_clusters_image = []
+    
     # Let's work from the original coordinates in x, y, w, h format and with string type
     for identification in identifications_image:
         box_coordinates_string.append([identification['coordinateX'], identification['coordinateY'], identification['width'], identification['height']])
@@ -135,9 +134,10 @@ def get_clusters_per_image(identifications_image):
     print("Filled array " + str(images_to_final_image))
     # Calculate the median for each cluster
     for index, cluster in enumerate(images_to_final_image):
+        print("Initially the array has " + str(final_clusters_image))
         final_median_cluster = median_cluster_xywh(cluster)
         print("The median of each component (x, y, width, height) of the cluster is " + str(final_median_cluster) 
               + " and the final label is " + str(final_labels[str(index)]))
-        final_clusters.append(final_median_cluster + [final_labels[str(index)]])
-        print("For the DB is " + str(final_clusters))
-    return final_clusters
+        final_clusters_image.append(final_median_cluster + [final_labels[str(index)]])
+        print("For the DB is " + str(final_clusters_image))
+    return final_clusters_image

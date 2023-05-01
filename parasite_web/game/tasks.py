@@ -1,5 +1,6 @@
 from parasite_web.celery import app as celery_app
 from .models import Identification
+from uploads.models import Region
 from django.db.models import Count
 from .clustering import get_clusters_per_image
 
@@ -20,5 +21,6 @@ def launch_clustering():
         identifications_grouped.append(identifications_per_image)
     print(identifications_grouped)
     for identification_grouped in identifications_grouped:
-        get_clusters_per_image(identification_grouped)
-
+        print("Lo que se le pasa es " + str(identification_grouped))
+        regions_of_interest_image = get_clusters_per_image(identification_grouped)
+        print("Lo que recibe es"  + str(regions_of_interest_image))
