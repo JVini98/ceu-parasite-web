@@ -21,5 +21,4 @@ def launch_clustering():
     print(identifications_grouped)
     for identification_grouped in identifications_grouped:
         get_clusters_per_image(identification_grouped)
-        print("Lo que se le pasa a cluster es " + str(identification_grouped))
 

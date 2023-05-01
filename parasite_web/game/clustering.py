@@ -5,7 +5,10 @@ from torchvision import ops
 from sklearn.cluster import DBSCAN
 
 # Dictionary containing the final cluster's labels
-labels_cluster = {}
+final_labels = {}
+
+# Array containing the final xywh format and label of the final clusters
+final_clusters = []
 
 # Define a function to transform bbox format
 def xywh_to_xyxy(bbox):
@@ -32,21 +35,8 @@ def _box_inter_union(boxes1, boxes2):
 
     return inter, union
 
-
+# Return intersection-over-union (Jaccard index) between two sets of boxes.
 def box_iou(boxes1, boxes2):
-    """
-    Return intersection-over-union (Jaccard index) between two sets of boxes.
-
-    Both sets of boxes are expected to be in ``(x1, y1, x2, y2)`` format with
-    ``0 <= x1 < x2`` and ``0 <= y1 < y2``.
-
-    Args:
-        boxes1 (np.array[N, 4]): first set of boxes
-        boxes2 (np.array[M, 4]): second set of boxes
-
-    Returns:
-        Tensor[N, M]: the NxM matrix containing the pairwise IoU values for every element in boxes1 and boxes2
-    """
     inter, union = _box_inter_union(boxes1, boxes2)
     iou = inter / union
     return iou
@@ -85,9 +75,9 @@ def median_cluster_xywh(cluster_xywh):
         coordinate_y.append(float(image[1]))
         width.append(float(image[2]))
         height.append(float(image[3]))
-    return median_component(coordinate_x), median_component(coordinate_y), median_component(width), median_component(height)
+    return [str(median_component(coordinate_x)), str(median_component(coordinate_y)), str(median_component(width)), str(median_component(height))]
 
-# if __name__ == "__main__":
+# Get the all the clusters in the image and assign them a final label
 def get_clusters_per_image(identifications_image):
     # Define the arrays to work with coordinates and labels
     box_coordinates_string = []
@@ -140,10 +130,14 @@ def get_clusters_per_image(identifications_image):
         if cluster >= 0:
             images_to_final_image[cluster].append(box_coordinates_string[index])
             # Check if the current label is not in the dictionary to add it
-            if not bbox_labels[index] in labels_cluster:
-                labels_cluster[str(cluster)] = bbox_labels[index]
+            if not bbox_labels[index] in final_labels:
+                final_labels[str(cluster)] = bbox_labels[index]
     print("Filled array " + str(images_to_final_image))
     # Calculate the median for each cluster
     for index, cluster in enumerate(images_to_final_image):
-        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)) 
-              + " and the final label is " + str(labels_cluster[str(index)]))
+        final_median_cluster = median_cluster_xywh(cluster)
+        print("The median of each component (x, y, width, height) of the cluster is " + str(final_median_cluster) 
+              + " and the final label is " + str(final_labels[str(index)]))
+        final_clusters.append(final_median_cluster + [final_labels[str(index)]])
+        print("For the DB is " + str(final_clusters))
+    return final_clusters
