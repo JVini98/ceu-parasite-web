@@ -4,6 +4,9 @@ import torch
 from torchvision import ops
 from sklearn.cluster import DBSCAN
 
+# Dictionary containing the final cluster's labels
+labels_cluster = {}
+
 # Define a function to transform bbox format
 def xywh_to_xyxy(bbox):
     x, y, w, h = bbox
@@ -136,7 +139,11 @@ def get_clusters_per_image(identifications_image):
         # Real cluster
         if cluster >= 0:
             images_to_final_image[cluster].append(box_coordinates_string[index])
+            # Check if the current label is not in the dictionary to add it
+            if not bbox_labels[index] in labels_cluster:
+                labels_cluster[str(cluster)] = bbox_labels[index]
     print("Filled array " + str(images_to_final_image))
     # Calculate the median for each cluster
-    for cluster in images_to_final_image:
-        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)))
+    for index, cluster in enumerate(images_to_final_image):
+        print("The median of each component (x, y, width, height) of the cluster is " + str(median_cluster_xywh(cluster)) 
+              + " and the final label is " + str(labels_cluster[str(index)]))
