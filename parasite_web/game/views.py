@@ -48,7 +48,8 @@ def reportedPhotograph(request):
             image = Photograph.objects.get(id=pkImage)
             image.reported = True
             image.save()
-            return redirect('/game')
+            reported = 'The photograph has been reported successfully.'
+            return redirect(f'/game?reported={reported}')
 
 # Receive the identifications send by the user
 def manipulateImage(request):
@@ -69,6 +70,8 @@ def manipulateImage(request):
                                                 )
                 identification.save()
             return JsonResponse({'message': "Successfully sent to the server"})
+            # message = "Successfully sent to the server"
+            # return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form, 'message': message})
     else:
         # If the user is logged in
         if ('user' in request.session):
@@ -98,7 +101,12 @@ def manipulateImage(request):
                 # If there are parasites in the DB
                 if parasites: 
                     form = ReportPhotographForm()
-                    return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form})
+                    if request.GET.get('reported'):
+                        reported = request.GET.get('reported')
+                        reported_message = '<div class="alert alert-success margin-lr" role="alert">' + reported + '</div>'
+                        return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form, 'reported': reported_message})
+                    else:
+                        return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form})
                 # If there are no parasites in the DB
                 else: 
                     error = 'Currently there are no parasites to choose from, please contact the administrator to provide you the options'

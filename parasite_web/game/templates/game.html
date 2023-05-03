@@ -70,6 +70,7 @@
         <h1>Identify the parasites</h1>
       </div>
     </nav>
+    {{reported|safe}}
     <form method="post" enctype="multipart/form-data" action="{% url 'reported' %}">
       {% csrf_token %}
       {{ form.image_reported }}
