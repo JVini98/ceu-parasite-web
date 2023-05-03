@@ -23,7 +23,7 @@ def retrievePhotograph(idReceived):
 def getPhotographLessAnnotations():
     # Retrieve photographs with and without annotations
     photographsWithAnnotations = Identification.objects.values('photograph').annotate(count=Count('photograph')).order_by('count')
-    allPhotographs = Photograph.objects.all()
+    allPhotographs = Photograph.objects.filter(reported=False)
     
     # Find the photograph with the least number of annotations or the first with no annotations
     photographWithLeastAnnotations = None

@@ -74,7 +74,7 @@
       {% csrf_token %}
       {{ form.image_reported }}
       <div class="buttons">
-        <button id="reportButton" type="submit" class="btn btn-danger btn-lg marginBotton" name="image_reported" value="{{image}}">Report photograph</button>
+        <button id="reportButton" type="submit" class="btn btn-danger btn-lg marginBotton" name="image_reported" value="{{image.id}}">Report photograph</button>
       </div>
     </form>
     <div id="imageContainer" class="marginBotton">
