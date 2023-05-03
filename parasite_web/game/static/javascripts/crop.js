@@ -108,7 +108,7 @@ buttonSend.addEventListener('click', ()=>{
           },
           error: function (error) {
             console.log(error);
-            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">${error}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">${error.message}</div>`;
           }
       });
   });
