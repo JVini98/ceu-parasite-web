@@ -1,41 +1,57 @@
-.buttons{
-    text-align: right;
+.buttons {
+  text-align: right;
 }
 
-.marginBotton{
-    margin-bottom: 15px;
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.imageCentered{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+main {
+  flex: 1;
 }
 
-.margin{
-    margin-top:15px;
-    margin-bottom: 15px;
+footer {
+  margin-top: auto;
 }
 
-.hidden{
-    display: none;
+.marginBotton {
+  margin-bottom: 15px;
 }
 
-#cropButton, #sendButton, #reportButton{
-    margin-right: 30px;
+.imageCentered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }
 
-#sendButton{
-    margin-bottom: 15px;
+.margin {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+#cropButton,
+#sendButton,
+#reportButton {
+  margin-right: 30px;
+}
+
+#sendButton {
+  margin-bottom: 15px;
 }
 
 #gameImage {
-    display: block;
-    max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
-.margin-lr{
-    margin-left: 20px; 
-    margin-right: 20px;
+.margin-lr {
+  margin-left: 20px;
+  margin-right: 20px;
 }
