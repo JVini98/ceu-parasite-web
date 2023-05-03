@@ -14,14 +14,14 @@ class Identification(models.Model):
     photograph = models.ForeignKey(Photograph, on_delete=models.CASCADE)
     parasite = models.ForeignKey(Parasite, on_delete=models.CASCADE)
     
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['user', 
-                                            'photograph', 
-                                            'parasite', 
-                                            'coordinateX', 
-                                            'coordinateY', 
-                                            'width', 
-                                            'height'
-                                            ], name='unique_indetification')
-        ]
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['user', 
+    #                                         'photograph', 
+    #                                         'parasite', 
+    #                                         'coordinateX', 
+    #                                         'coordinateY', 
+    #                                         'width', 
+    #                                         'height'
+    #                                         ], name='unique_indetification')
+    #     ]
