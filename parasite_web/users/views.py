@@ -45,16 +45,22 @@ def loginUser(request):
         return render(request, 'login.html', {'form': form, 'error': error})
     # GET Method mainly
     else: 
-        # The user changed the password and it is redirected to login
-        if request.session.get('password_succes'):
-            message = request.session.get('password_succes')
-            del request.session['password_succes']
-            form = LoginForm()
-            return render(request, 'login.html', {'form': form, 'message': message})
-        # Without any session variables
+        # If the user is logged in, display an error
+        if ('user' in request.session):
+            error = 'To log in with another account, please log out first'
+            return redirect(f'/?error={error}')
+        # Allow the user to log in
         else: 
-            form = LoginForm()
-            return render(request, 'login.html', {'form': form})
+            # The user changed the password and it is redirected to login
+            if request.session.get('password_succes'):
+                message = request.session.get('password_succes')
+                del request.session['password_succes']
+                form = LoginForm()
+                return render(request, 'login.html', {'form': form, 'message': message})
+            # Without any session variables
+            else: 
+                form = LoginForm()
+                return render(request, 'login.html', {'form': form})
 
 # Activate user in DB when the activation button is clicked
 # or allow to change password when the reset button is clicked
@@ -166,8 +172,14 @@ def registerUser(request):
             return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Your errors are: ' + str(form.errors)})
     # GET method mainly
     else:
-        form = SignUpForm()
-        return render(request, 'signup.html', {'form': form})
+        # If the user is logged in, display an error
+        if ('user' in request.session):
+            error = 'To register another account, please log out first'
+            return redirect(f'/?error={error}')
+        # Allow the user to register
+        else: 
+            form = SignUpForm()
+            return render(request, 'signup.html', {'form': form})
 
 # User requests a new password
 def forgotPassword(request): 
@@ -199,8 +211,14 @@ def forgotPassword(request):
         return render(request, 'forgot-password.html', {'form': form, 'error': error})
     # GET method mainly
     else: 
-        form = EmailForm()
-        return render (request, 'forgot-password.html', {'form': form})
+        # If the user is logged in, display an error
+        if ('user' in request.session):
+            error = 'To change the password of an account, please log out first'
+            return redirect(f'/?error={error}')
+        # Allow the user to introduce their email change the password 
+        else: 
+            form = EmailForm()
+            return render (request, 'forgot-password.html', {'form': form})
     
 # Change a user password
 def resetPassword(request):
