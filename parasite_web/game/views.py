@@ -72,29 +72,41 @@ def manipulateImage(request):
     else:
         # If the user is logged in
         if ('user' in request.session):
-            image = getPhotographLessAnnotations()
-            executed, imageDisplay = deleteEXIF(image)
-            # Image with EXIF metadata (JPEG)
-            if executed:
-                buffer = BytesIO()
-                imageDisplay.save(buffer, format="JPEG")
-                buffer.seek(0)
-                mime_type = "image/jpeg"
-                contents = buffer.getvalue()
-                contents_base64 = base64.b64encode(contents).decode()
-                imageRender = {
-                    'id': image.id,
-                    'path': f"data:{mime_type};base64,{contents_base64}"
-                }
-            # Image with no EXIF metadata
-            else: 
-                imageRender = {
-                    'id': image.id,
-                    'path': imageDisplay.path.url
-                }
-            parasites = Parasite.objects.values_list('name', flat=True)
-            form = ReportPhotographForm()
-            return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form})
+            # Try to get images from the DB
+            try: 
+                image = getPhotographLessAnnotations()
+                executed, imageDisplay = deleteEXIF(image)
+                # Image with EXIF metadata (JPEG)
+                if executed:
+                    buffer = BytesIO()
+                    imageDisplay.save(buffer, format="JPEG")
+                    buffer.seek(0)
+                    mime_type = "image/jpeg"
+                    contents = buffer.getvalue()
+                    contents_base64 = base64.b64encode(contents).decode()
+                    imageRender = {
+                        'id': image.id,
+                        'path': f"data:{mime_type};base64,{contents_base64}"
+                    }
+                # Image with no EXIF metadata
+                else: 
+                    imageRender = {
+                        'id': image.id,
+                        'path': imageDisplay.path.url
+                    }
+                parasites = Parasite.objects.values_list('name', flat=True)
+                # If there are parasites in the DB
+                if parasites: 
+                    form = ReportPhotographForm()
+                    return render(request=request, template_name="game.html", context={"image": imageRender, 'parasites': parasites, 'form': form})
+                # If there are no parasites in the DB
+                else: 
+                    error = 'Currently there are no parasites to choose from, please contact the administrator to provide you the options'
+                    return redirect(f'/?error={error}')
+            # There are no images in the DB
+            except: 
+                error = 'Currently there are no images to identify, please provide one in the uploads section'
+                return redirect(f'/?error={error}')
         # Display error message
         else: 
             error = 'To access the game section, you need to login'
