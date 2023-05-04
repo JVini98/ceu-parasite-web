@@ -28,15 +28,15 @@ let parasitesList = [];
 const cropper = new Cropper(image, {
   aspectRatio: 16 / 9,
   
-  crop(event) {
-    console.log(event.detail.x);
-    console.log(event.detail.y);
-    console.log(event.detail.width);
-    console.log(event.detail.height);
-    console.log(event.detail.rotate);
-    console.log(event.detail.scaleX);
-    console.log(event.detail.scaleY);
-  },
+  // crop(event) {
+  //   console.log(event.detail.x);
+  //   console.log(event.detail.y);
+  //   console.log(event.detail.width);
+  //   console.log(event.detail.height);
+  //   console.log(event.detail.rotate);
+  //   console.log(event.detail.scaleX);
+  //   console.log(event.detail.scaleY);
+  // },
 });
 
 // crop image on click
@@ -99,7 +99,7 @@ buttonSend.addEventListener('click', ()=>{
           processData: false,
           contentType: false,
           success: function (response) {
-            console.log(response);
+            // console.log(response);
             alertBox.innerHTML = `<div id="alertBox" class="alert alert-success" role="alert">${response["message"]}</div>`;
             // reload page to display another image
             setTimeout(function(){
@@ -107,8 +107,8 @@ buttonSend.addEventListener('click', ()=>{
             }, 3000);
           },
           error: function (error) {
-            console.log(error);
-            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">${error.message}</div>`;
+            // console.log(error);
+            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">There was an unexpected error, please reload the page and try again</div>`;
           }
       });
   });
