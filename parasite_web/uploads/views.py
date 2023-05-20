@@ -159,7 +159,7 @@ def annotate_parasites(parasite_img):
 
     # matplotlib.use('TkAgg')
 
-    SERVER = '13.48.86.83:8500'
+    SERVER = '161.156.82.239:8500'
 
     parasite_img_np = np.array(parasite_img)
 
