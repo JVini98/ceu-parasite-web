@@ -7,3 +7,6 @@ scikit-learn
 matplotlib
 piexif
 celery redis
+grpcio
+tensorflow
+tensorflow-serving-api
