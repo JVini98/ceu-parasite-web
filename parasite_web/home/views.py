@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from users.models import User
+from .forms import NameForm
 
 # Create your views here.
 def home(request):
@@ -20,4 +22,16 @@ def logout(request):
     return redirect('/')
 
 def account_settings(request):
-    return render(request, 'settings.html')
+    user = User.objects.get(email=request.session["user"])
+    form = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
+    context = {"form": form}
+    return render(request, 'settings.html', context)
+
+def update_user_name(request):
+    if request.method == "POST":
+        user = User.objects.get(email=request.session["user"])
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        print("El usuario es " + user.first_name)
+        user.save()
+        return redirect('account_settings')

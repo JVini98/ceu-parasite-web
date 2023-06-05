@@ -72,22 +72,25 @@
             <div class="col-lg-6">
                 <div class="card bg-light">
                     <div class="card-body">
-                        <form>
+                        <form id="name_form" action="update_user_name" method="POST"> 
+                            {% csrf_token %}
                             <div class="form-group row">
-                                <label for="name" class="col-sm-3 col-form-label">First name:</label>
+                                <label for="first_name" form="name_form" class="col-sm-3 col-form-label">First name:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="first_name" placeholder="Enter your name">
+                                    {{form.first_name}}
+                                    <!-- <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" value={{first_name}}> -->
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="surname" class="col-sm-3 col-form-label">Last name:</label>
+                                <label for="last_name" form="name_form" class="col-sm-3 col-form-label">Last name:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="last_name" placeholder="Enter your surname">
+                                    {{form.last_name}}
+                                    <!-- <input type="text" class="form-control" id="last_name" placeholder="Enter your last name" value={{last_name}}> -->
                                 </div>
                             </div>
                             <div class="form-group row justify-content-center">
                                 <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary btn-block">Update settings</button>
+                                    <button id="name_button" type="submit" class="btn btn-primary btn-block">Update settings</button>
                                 </div>
                             </div>
                         </form>
@@ -95,7 +98,7 @@
                 </div>
                 <div class="card bg-light mt-4 mb-4">
                     <div class="card-body">
-                        <form>                            
+                        <form> <!--Revisar etiquetas-->                            
                             <div class="form-group row">
                                 <label for="new-password" class="col-sm-4 col-form-label">New password:</label>
                                 <div class="col-sm-8">
