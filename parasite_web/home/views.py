@@ -18,3 +18,6 @@ def home(request):
 def logout(request):
     del request.session['user']
     return redirect('/')
+
+def account_settings(request):
+    return render(request, 'settings.html')
