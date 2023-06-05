@@ -24,7 +24,12 @@ def logout(request):
 def account_settings(request):
     user = User.objects.get(email=request.session["user"])
     form = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
-    context = {"form": form}
+    if (request.GET.get('message')):
+        message = request.GET.get('message')
+        formatMessage = '<div class="alert alert-success" role="alert">' + message + '</div>'
+        context = {"form": form, 'message': formatMessage}
+    else: 
+        context = {"form": form}
     return render(request, 'settings.html', context)
 
 def update_user_name(request):
@@ -32,6 +37,6 @@ def update_user_name(request):
         user = User.objects.get(email=request.session["user"])
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
-        print("El usuario es " + user.first_name)
         user.save()
-        return redirect('account_settings')
+        message = 'Account settings updated successfully'
+        return redirect(f'/account_settings?message={message}')
