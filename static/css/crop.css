@@ -1,0 +1,57 @@
+.buttons {
+  text-align: right;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.marginBotton {
+  margin-bottom: 15px;
+}
+
+.imageCentered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.margin {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+#cropButton,
+#sendButton,
+#reportButton {
+  margin-right: 30px;
+}
+
+#sendButton {
+  margin-bottom: 15px;
+}
+
+#gameImage {
+  display: block;
+  max-width: 100%;
+}
+
+.margin-lr {
+  margin-left: 20px;
+  margin-right: 20px;
+}
