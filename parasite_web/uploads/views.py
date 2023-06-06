@@ -108,7 +108,7 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=1, min_score=0.1):
     colors = list(ImageColor.colormap.values())
 
     try:
-        font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf",
+        font = ImageFont.truetype("/usr/share/fonts/liberation-narrow/LiberationSansNarrow.ttf",
                                   25)
     except IOError:
         print("Font not found, using default font.")
@@ -118,7 +118,7 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=1, min_score=0.1):
 
         if scores[i] >= min_score:
             ymin, xmin, ymax, xmax = tuple(boxes[i])
-            display_str = "{}: {}%".format(class_names[i], 100 * scores[i])
+            display_str = "{}: {:.2f}%".format(class_names[i], 100 * scores[i])
             color = colors[hash(class_names[i]) % len(colors)]
             image_pil = Image.fromarray(np.uint8(image)).convert("RGB")
             draw_bounding_box_on_image(
@@ -137,17 +137,17 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=1, min_score=0.1):
 def map_classes(classes):
 
     conversion_table = {
-        1: "Trichuris trichura",
-        2: "Ascaris lumbricoides",
-        3: "Uncinarias",
-        4: "Diphyllobotrium latum",
-        5: "Taenia",
-        6: "Balantidium coli",
-        7: "Hymenolepis nana",
-        8: "Enterobius vermicularis",
-        9: "Amebas",
-        10: "Giardia",
-        11: "Sin clasificar"
+        1: "Amebas",
+        2: "Ascaris Lumbricoides",
+        3: "Balantidium Coli",
+        4: "Diphyllobotrium Latum",
+        5: "Enterobius",
+        6: "Enterobius Vermicularis",
+        7: "Giardia",
+        8: "Hymenolepis Nana",
+        9: "Taenia",
+        10: "Trichuris Trichura",
+        11: "Uncinarias"
     }
 
     string_arr = np.vectorize(conversion_table.get)(classes)
