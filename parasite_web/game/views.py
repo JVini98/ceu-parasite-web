@@ -8,7 +8,7 @@ from .forms import ReportPhotographForm
 from django.db.models import Count
 from PIL import Image
 from io import BytesIO
-import json, piexif, base64
+import json, base64
 
 # Create your views here.
 # Retrieve the parasite instance
@@ -127,11 +127,12 @@ def deleteEXIF(imageDB):
     imageToChange = Image.open(BytesIO(imageBytes))
     # Check if the image has EXIF metadata to delete it
     if "exif" in imageToChange.info:
-        exifDict = piexif.load(imageToChange.info["exif"])
-        exifBytes = piexif.dump(exifDict)
+        # exifDict = piexif.load(imageToChange.info["exif"])
+        # exifBytes = piexif.dump(exifDict)
         del imageToChange.info["exif"]
         buffer = BytesIO()
-        imageToChange.save(buffer, format="JPEG", exif=exifBytes)
+        # imageToChange.save(buffer, format="JPEG", exif=exifBytes)
+        imageToChange.save(buffer, format="JPEG")
         return True, imageToChange
     return False, imageDB 
 
