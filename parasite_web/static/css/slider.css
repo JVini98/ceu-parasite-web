@@ -1,0 +1,54 @@
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(205, 196, 196);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-right: 30px;
+}
+
+.slide img {
+  width: 30%;
+  height: auto;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+.slider-button-left {
+  left: 0;
+}
+
+.slider-button-right {
+  right: 0;
+}
+
+.textCenter{
+  text-align: center;
+  font-size: 24px;
+}

@@ -63,9 +63,11 @@
     <!-- Content -->
     <div class="container">
       <h2 class="my-4">Annotated image</h2>
-      {% if img_uri %}
-      <img src="{{ img_uri }}">
-      {% endif %}
+      <div class="image-container">
+      	{% if img_uri %}
+      	<img id="annotated-image"  src="{{ img_uri }}">
+      	{% endif %}
+      </div>
     </div>
     <!-- Footer -->
     <footer class="bg-dark py-3">
