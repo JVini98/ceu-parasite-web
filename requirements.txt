@@ -5,7 +5,6 @@ torch
 torchvision
 scikit-learn
 matplotlib
-piexif
 celery redis
 grpcio
 tensorflow
