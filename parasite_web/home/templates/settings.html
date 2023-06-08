@@ -84,14 +84,14 @@
                             <div class="form-group row">
                                 <label for="first_name" form="name_form" class="col-sm-3 col-form-label">First name:</label>
                                 <div class="col-sm-9">
-                                    {{form.first_name}}
+                                    {{form_name.first_name}}
                                     <!-- <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" value={{first_name}}> -->
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="last_name" form="name_form" class="col-sm-3 col-form-label">Last name:</label>
                                 <div class="col-sm-9">
-                                    {{form.last_name}}
+                                    {{form_name.last_name}}
                                     <!-- <input type="text" class="form-control" id="last_name" placeholder="Enter your last name" value={{last_name}}> -->
                                 </div>
                             </div>
@@ -105,20 +105,24 @@
                 </div>
                 <div class="card bg-light mt-4 mb-4">
                     <div class="card-body">
-                        <form> <!--Revisar etiquetas-->                            
+                        <form id="password_form" action="update_password" method="POST"> 
+                            {% csrf_token %}                          
                             <div class="form-group row">
                                 <label for="new-password" class="col-sm-4 col-form-label">New password:</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="password1" placeholder="Enter your new password">
+                                    {{form_password.password1}}
+                                    <!-- <input type="password" class="form-control" id="password1" placeholder="Enter your new password"> -->
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="confirm-password" class="col-sm-4 col-form-label">Confirm new password:</label>
+                                <label for="confirm-password" class="col-sm-4 col-form-label">Confirm password:</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control" id="password2" placeholder="Confirm your new password">
+                                    {{form_password.password2}}
+                                    <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm your new password"> -->
                                 </div>
                             </div>
-                            <div class="form-group row justify-content-center">
+                            <span class="small"><img class="info" src="../static/images/info.svg" alt="Password information"> The password mininum length is 8 and maximun is 22 characters</span>
+                            <div class="form-group row justify-content-center mt-3">
                                 <div class="col-sm-6">
                                     <button type="submit" class="btn btn-primary btn-block">Update password</button>
                                 </div>

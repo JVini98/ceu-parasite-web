@@ -1,5 +1,6 @@
 from django import forms
 from .models import Name
+from users.forms import PasswordForm
 
 class NameForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -18,3 +19,9 @@ class NameForm(forms.ModelForm):
     class Meta:
         model = Name
         fields = ['first_name', 'last_name']
+
+class PasswordFormStyle(PasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].widget.attrs["class"] = "form-control"
+        self.fields["password2"].widget.attrs["class"] = "form-control"

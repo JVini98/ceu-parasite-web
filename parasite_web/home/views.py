@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from users.models import User
-from .forms import NameForm
+from .forms import NameForm, PasswordFormStyle
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 def home(request):
@@ -21,17 +22,24 @@ def logout(request):
     del request.session['user']
     return redirect('/')
 
+# Show user information
 def account_settings(request):
     user = User.objects.get(email=request.session["user"])
-    form = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
+    form_name = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
+    form_password = PasswordFormStyle()
     if (request.GET.get('message')):
         message = request.GET.get('message')
         formatMessage = '<div class="alert alert-success" role="alert">' + message + '</div>'
-        context = {"form": form, 'message': formatMessage}
+        context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
+    elif (request.GET.get('error')):
+        error = request.GET.get('error')
+        formatMessage = '<div class="alert alert-danger" role="alert">' + error + '</div>'
+        context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
     else: 
-        context = {"form": form}
+        context = {"form_name": form_name, "form_password": form_password}
     return render(request, 'settings.html', context)
 
+# Change the user information
 def update_user_name(request):
     if request.method == "POST":
         user = User.objects.get(email=request.session["user"])
@@ -40,3 +48,20 @@ def update_user_name(request):
         user.save()
         message = 'Account settings updated successfully'
         return redirect(f'/account_settings?message={message}')
+
+# Change a user password
+def update_password(request):
+    if request.method == 'POST':
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        # Check if passwords match
+        if (pass1 == pass2):
+            user = User.objects.get(email=request.session["user"])
+            user.password = make_password(pass1)
+            user.save()
+            message = "Your password was successfully changed"
+            return redirect(f'/account_settings?message={message}')
+        # Password do not match
+        else: 
+            error = "The passwords do not match. Plase make sure you typed them correctly."
+            return redirect(f'/account_settings?error={error}')
