@@ -24,20 +24,26 @@ def logout(request):
 
 # Show user information
 def account_settings(request):
-    user = User.objects.get(email=request.session["user"])
-    form_name = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
-    form_password = PasswordFormStyle()
-    if (request.GET.get('message')):
-        message = request.GET.get('message')
-        formatMessage = '<div class="alert alert-success" role="alert">' + message + '</div>'
-        context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
-    elif (request.GET.get('error')):
-        error = request.GET.get('error')
-        formatMessage = '<div class="alert alert-danger" role="alert">' + error + '</div>'
-        context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
+    # Check if the user is logged in
+    if ('user' in request.session):
+        user = User.objects.get(email=request.session["user"])
+        form_name = NameForm(initial={'first_name': user.first_name, 'last_name': user.last_name})
+        form_password = PasswordFormStyle()
+        if (request.GET.get('message')):
+            message = request.GET.get('message')
+            formatMessage = '<div class="alert alert-success" role="alert">' + message + '</div>'
+            context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
+        elif (request.GET.get('error')):
+            error = request.GET.get('error')
+            formatMessage = '<div class="alert alert-danger" role="alert">' + error + '</div>'
+            context = {"form_name": form_name, "form_password": form_password,'message': formatMessage}
+        else: 
+            context = {"form_name": form_name, "form_password": form_password}
+        return render(request, 'settings.html', context)
+    # The user is not logged in
     else: 
-        context = {"form_name": form_name, "form_password": form_password}
-    return render(request, 'settings.html', context)
+        error = 'To access the account settings section, you need to login'
+        return redirect(f'/?error={error}')
 
 # Change the user information
 def update_user_name(request):
