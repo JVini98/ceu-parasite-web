@@ -49,6 +49,8 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					{% if 'user' in request.session %}
+					<a class="dropdown-item" href="/account_settings">User settings</a>
+					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/logout">Logout</a>
 					{% else %}
 					<a class="dropdown-item" href="/users/">Sign in</a>
@@ -58,7 +60,7 @@
 				</div>
 				</li>
 			</ul>
-			</div>
+            </div>
 		</nav>
     <!-- Content -->
     <div class="container">
