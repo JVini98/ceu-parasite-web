@@ -49,7 +49,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 {% if 'user' in request.session %}
-                <a class="dropdown-item" href="user_settings">User settings</a>
+                <a class="dropdown-item" href="account_settings">User settings</a>
                 <a class="dropdown-item" href="logout">Logout</a>
                 {% else %}
                 <a class="dropdown-item" href="/users/">Sign in</a>
@@ -121,7 +121,7 @@
                                     <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm your new password"> -->
                                 </div>
                             </div>
-                            <span class="small"><img class="info" src="../static/images/info.svg" alt="Password information"> The password mininum length is 8 and maximun is 22 characters</span>
+                            <span class="small"><img class="info" src="../static/images/info.svg" alt="Password information"> The password mininum length is 8 characters and maximun is 22 characters</span>
                             <div class="form-group row justify-content-center mt-3">
                                 <div class="col-sm-6">
                                     <button type="submit" class="btn btn-primary btn-block">Update password</button>
