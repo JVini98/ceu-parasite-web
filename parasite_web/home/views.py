@@ -65,3 +65,14 @@ def update_password(request):
         else: 
             error = "The passwords do not match. Plase make sure you typed them correctly."
             return redirect(f'/account_settings?error={error}')
+
+# Delete the current user
+def delete_user(request):
+    if request.method == 'POST':
+        user = User.objects.get(email=request.session["user"])
+        try: 
+            user.delete()
+            message = "Your user was successfully deleted"
+            return redirect(f'/logout')
+        except Exception as exception:
+            return redirect(f'/account_settings?message={str(exception)}')
