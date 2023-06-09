@@ -1,17 +1,7 @@
-// JavaScript code to show the cookie confirmation pop-up and freeze the page
-$(document).ready(function() {
-    $('#cookieModal').modal('show');
-    $('body').addClass('modal-open');
-});
+const buttonCookies = document.getElementById('cookiesButton');
+const bannerCookies = document.getElementById("cookie-banner")
 
-$('#acceptCookies').click(function() {
-    // Handle accept cookies action here
-    $('#cookieModal').modal('hide');
-    $('body').removeClass('modal-open');
+// Cookie banner
+buttonCookies.addEventListener("click", function() {
+    bannerCookies.style.display = "none";
 });
-
-// $('#declineCookies').click(function() {
-//     // Handle decline cookies action here
-//     $('#cookieModal').modal('hide');
-//     $('body').removeClass('modal-open');
-// });

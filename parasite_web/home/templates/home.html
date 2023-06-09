@@ -94,23 +94,19 @@
 			</div>
 		</div>
 		</div>
-		<!-- HTML markup for the cookie pop-up -->
-		<div class="modal" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="cookieModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <h5 class="modal-title" id="cookieModalLabel">This site uses cookies</h5>
-				</div>
-				<div class="modal-body">
-				  <p class="justify">bla bla bla</p>
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-primary" id="acceptCookies">Accept</button>
-				  <!-- <button type="button" class="btn btn-secondary" id="declineCookies">Decline</button> -->
+		<!-- Cookie banner -->
+		<div id="cookie-banner" class="fixed-bottom bg-dark text-white p-2">
+			<div class="container">
+			  <div class="row">
+				<div class="col">
+				  <span class="d-flex justify-content-between align-items-center">
+					<p class="mb-0">This website only uses technical cookies that are necessary for the page to work. Learn more about our <a href="cookies.html" class="text-blue font-weight-bold">Cookie Policy</a>.</p>
+					<button type="button" class="btn btn-primary" id="cookiesButton">Accept</button>
+				  </span>
 				</div>
 			  </div>
 			</div>
-		</div>
+		</div>		  
 		<!-- Footer -->
 		<footer class="bg-dark py-3">
 			<div class="container text-center">
