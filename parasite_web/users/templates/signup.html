@@ -14,8 +14,8 @@
 </head>
 <body>
     <div id="container" class="container">
-        <div class="card center spacer">
-            <h1 class="title text-center">Welcome to registration</h1>
+        <div class="card center spacer margin-top">
+            <h1 class="title text-center margin-top">Welcome to registration</h1>
             <form method="post" action="register" id="signup-form" class="login-form spacer">
                 {% csrf_token %}
                 <div class="input-group">
@@ -44,8 +44,24 @@
                     <label for="password2" form="signup-form" class="label">Confirm your password<span class="red">*</span>:</label>
                     {{ form.password2 }}
                 </div>
+                <div class="input-group">
+                    <span class="justify-text">
+                        <label for="accept-policy" form="signup-form"></label>
+                        <input type="checkbox" id="accept-policy" name="accept-policy">
+                            I have read and accept the 
+                            <a href='privacy-policy' class="link" target="_blank">Privacy Policy</a>
+                            and the
+                            <a href='terms-of-use' class="link" target="_blank">Terms of Use<span class="red">*</span></a>                           
+                    </span>                 
+                </div>
+                <div class="input-group">
+                    <label for="accept-terms" form="signup-form">
+                        <input type="checkbox" id="accept-terms" name="accept-terms">
+                        I agree to receive electronic communications<span class="red">*</span>
+                    </label>
+                </div>
                 <div id="error" class="error">{{error}}</div>
-                <input type="submit" class="submit" value="Signup">
+                <input id="summitButton" type="submit" class="submit" value="Signup">
             </form>
             <div class="redirect">
                 <br>

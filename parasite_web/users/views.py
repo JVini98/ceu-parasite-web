@@ -263,3 +263,11 @@ def error(request):
     title = request.GET.get('title')
     message = request.GET.get('message')
     return render(request, 'error.html', {'title': title, 'message': message})
+
+# Show Privacy Policy
+def privacyPolicy(request):
+    return render(request, 'privacy-policy.html')
+
+# Show Terms of Use
+def termsOfUse(request):
+    return render(request, 'terms-of-use.html')
