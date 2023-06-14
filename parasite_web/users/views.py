@@ -109,7 +109,7 @@ def activateEmail(request, user, email, subject):
         'protocol': 'https' if request.is_secure() else 'http'
     })
     # Send it async
-    threading.Thread(target=send_mail, args=(mail_subject, message, settings.EMAIL_FROM, [email]), kwargs={'fail_silently': True, 'html_message': message}).start()
+    threading.Thread(target=send_mail, args=(mail_subject, message, settings.EMAIL_HOST_USER, [email]), kwargs={'fail_silently': True, 'html_message': message}).start()
     # Send it sync
     # email = EmailMessage(mail_subject, message, to=[email])
     # email.content_subtype='html'
