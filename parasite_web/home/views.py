@@ -82,3 +82,7 @@ def delete_user(request):
             return redirect(f'/logout')
         except Exception as exception:
             return redirect(f'/account_settings?message={str(exception)}')
+
+# Show Cookies
+def cookies(request):
+    return render(request, 'cookies.html')
