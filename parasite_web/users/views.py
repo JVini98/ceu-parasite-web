@@ -268,6 +268,6 @@ def error(request):
 def privacyPolicy(request):
     return render(request, 'privacy-policy.html')
 
-# Show Terms of Use
-def termsOfUse(request):
-    return render(request, 'terms-of-use.html')
+# Show Legal Notice
+def legalNotice(request):
+    return render(request, 'legal-notice.html')

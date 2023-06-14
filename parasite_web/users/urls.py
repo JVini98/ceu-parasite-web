@@ -9,5 +9,5 @@ urlpatterns = [
     path('verifyLink/<uidb64>/<token>/<action>', views.verifyLink, name="verifyLink"),
     path('error', views.error, name="Error"),
     path('privacy-policy', views.privacyPolicy, name="privacy-policy"),
-    path('terms-of-use', views.termsOfUse, name="terms-of-use"),
+    path('legal-notice', views.legalNotice, name="legal-notice"),
 ]
