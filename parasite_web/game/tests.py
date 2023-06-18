@@ -5,7 +5,8 @@ import unittest
 
 # Create your tests here.
 class TestClustering(unittest.TestCase):
-    def test_one_cluster(self):
+    # Test to apply median (average of the two central values)
+    def test_one_cluster_two_identifications(self):
         identifications = []
         identifications.append({'coordinateX': 1000, 'coordinateY': 1700, 'width': 200, 'height':100, 'parasite': "A"})
         identifications.append({'coordinateX': 1050, 'coordinateY': 1650, 'width': 150, 'height':110, 'parasite': "A"})
@@ -65,6 +66,7 @@ class TestClustering(unittest.TestCase):
         
         self.assertEqual(expected_clusters, calculated_cluster)
     
+    # Test to apply median (central value)
     def test_one_cluster_three_identifications(self):
         identifications = []
         identifications.append({'coordinateX': 1000, 'coordinateY': 1700, 'width': 200, 'height':100, 'parasite': "A"})
