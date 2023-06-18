@@ -64,6 +64,17 @@ class TestClustering(unittest.TestCase):
         calculated_cluster = get_clusters_per_image(identifications)
         
         self.assertEqual(expected_clusters, calculated_cluster)
+    
+    def test_one_cluster_three_identifications(self):
+        identifications = []
+        identifications.append({'coordinateX': 1000, 'coordinateY': 1700, 'width': 200, 'height':100, 'parasite': "A"})
+        identifications.append({'coordinateX': 1050, 'coordinateY': 1650, 'width': 150, 'height':110, 'parasite': "A"})
+        identifications.append({'coordinateX': 1100, 'coordinateY': 1650, 'width': 225, 'height':95, 'parasite': "A"})
+        
+        expected_clusters = [["1050.0", "1650.0", "200.0", "100.0", "A"]]
+        calculated_cluster = get_clusters_per_image(identifications)
+        
+        self.assertEqual(expected_clusters, calculated_cluster)
 
 if __name__ == "__main__":
     unittest.main()
