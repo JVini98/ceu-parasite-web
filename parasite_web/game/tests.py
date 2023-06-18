@@ -113,6 +113,16 @@ class TestClustering(unittest.TestCase):
         
         self.assertEqual(expected_clusters, calculated_cluster)
 
+    def test_real_values(self):
+        identifications = []
+        identifications.append({'coordinateX': 867.8490849909888, 'coordinateY': 568.3798980744398, 'width': 832.0087912052827, 'height':468.0049450529716, 'parasite': "A"})
+        identifications.append({'coordinateX': 679.3439511375462, 'coordinateY': 469.190797093177, 'width': 1107.403701094231, 'height':622.914581865505, 'parasite': "A"})
+
+        expected_clusters = [["773.5965180642675", "518.7853475838084", "969.7062461497569", "545.4597634592383", "A"]]
+        calculated_cluster = get_clusters_per_image(identifications)
+        
+        self.assertEqual(expected_clusters, calculated_cluster)
+
 if __name__ == "__main__":
     unittest.main()
 
