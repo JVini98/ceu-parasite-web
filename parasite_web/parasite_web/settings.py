@@ -166,3 +166,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=21, minute=0),
     },
 }
+
+# Cookies duration
+SESSION_COOKIE_AGE = 86400
+CSRF_COOKIE_AGE = 3600
