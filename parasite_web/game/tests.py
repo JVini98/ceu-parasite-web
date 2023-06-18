@@ -35,6 +35,16 @@ class TestClustering(unittest.TestCase):
         
         self.assertEqual(expected_clusters, calculated_cluster)
 
+    def test_no_cluster_diff_coordy(self):
+        identifications = []
+        identifications.append({'coordinateX': 1000, 'coordinateY': 3000, 'width': 200, 'height':100, 'parasite': "A"})
+        identifications.append({'coordinateX': 1050, 'coordinateY': 1650, 'width': 150, 'height':110, 'parasite': "A"})
+        
+        expected_clusters = []
+        calculated_cluster = get_clusters_per_image(identifications)
+        
+        self.assertEqual(expected_clusters, calculated_cluster)
+
 if __name__ == "__main__":
     unittest.main()
 
