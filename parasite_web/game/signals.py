@@ -16,11 +16,11 @@ def log_identification(sender, instance, created, **kwargs):
         photographs_valid = Identification.objects.values('photograph')\
             .annotate(num_photos=Count('photograph'))\
             .filter(num_photos__gte=number_indentifications_per_image)
-        print(photographs_valid)
+        # print(photographs_valid)
         # Get Querysets with the all the identifications per image
         for photograph_valid in photographs_valid:
             identifications_per_image = Identification.objects.filter(photograph=photograph_valid['photograph']).values('coordinateX', 'coordinateY', 'width', 'height', 'parasite')
             identifications.append(identifications_per_image)
-        print(identifications)
+        # print(identifications)
     else:
         print('Identification updated, so nothing is done')
