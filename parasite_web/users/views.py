@@ -170,7 +170,7 @@ def registerUser(request):
         # The form was invalid
         else: 
             form = SignUpForm()
-            return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Your errors are: ' + str(form.errors)})
+            return render(request, 'signup.html', {'form': form, 'error': 'The data you introduced was invalid. Please check the data.' })
     # GET method mainly
     else:
         # If the user is logged in, display an error
@@ -228,21 +228,26 @@ def resetPassword(request):
         email = request.POST['email']
         pass1 = request.POST['password1']
         pass2 = request.POST['password2']
-        # Check if passwords match
-        if (pass1 == pass2):
-            # Try to find the user in the DB who requested the change
-            try: 
-                user = User.objects.get(email=email)
-                user.password = make_password(pass1)
-                user.save()
-                request.session['password_succes'] = "Your password was successfully changed"
-                return redirect('/users/')
-            # User not found
-            except: 
-                error = "The email account is not registered."   
-        # Password do not match
-        else: 
-            error = "The passwords do not match. Plase make sure you typed them correctly."
+        # Check if passwords were received
+        if pass1 is not None and pass2 is not None:
+            # Check if passwords match
+            if (pass1 == pass2):
+                # Try to find the user in the DB who requested the change
+                try: 
+                    user = User.objects.get(email=email)
+                    user.password = make_password(pass1)
+                    user.save()
+                    request.session['password_succes'] = "Your password was successfully changed"
+                    return redirect('/users/')
+                # User not found
+                except: 
+                    error = "The email account is not registered."   
+            # Password do not match
+            else: 
+                error = "The passwords do not match. Plase make sure you typed them correctly."
+        # There were no passwords received
+        else:
+            error = "You need to introduce a password and the confirmation of that password"
         form = PasswordForm()
         return render(request, 'reset-password.html', {'form': form, 'error': error}) 
     # GET method
