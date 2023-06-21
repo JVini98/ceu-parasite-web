@@ -163,7 +163,7 @@ CELERY_TIMEZONE = "Europe/Madrid"
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
         'task': 'game.tasks.launch_clustering',
-        'schedule': crontab(hour=21, minute=0),
+        'schedule': crontab(hour=3, minute=0),
     },
 }
 
