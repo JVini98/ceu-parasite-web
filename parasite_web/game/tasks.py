@@ -44,4 +44,4 @@ def launch_clustering():
                             parasite=retrieveParasite(region_of_interest_image[4])
                             )
             region.save()
-    print("Clusters calculated and saved to DB")
+    print("Task clustering executed")
