@@ -70,6 +70,9 @@
     <nav class="navbar navbar-light bg-light mb-4">
       <div class="container">
         <h1>Identify the parasites</h1>
+        <div>
+          This section allows you to identify as many parasites as you want from each image. You will need to crop a section of the current image and associate it with a parasite name provided from a list. Before sending your answers, you will be able to revise them at the bottom of this page. 
+        </div>
       </div>
     </nav>
     {{reported|safe}}
@@ -86,7 +89,7 @@
       <p id="imageID" class="hidden">{{image.id}}</p>
     </div>
     <div class="buttons">
-      <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Found!</button>
+      <button id="cropButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Crop</button>
     </div>
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">

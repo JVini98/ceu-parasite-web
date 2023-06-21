@@ -64,7 +64,14 @@
 		</nav>
     <!-- Content -->
     <div class="container">
-      <h2 class="my-4">Annotated image</h2>
+		<nav class="navbar navbar-light bg-light mb-4">
+            <div class="container">
+                <h1>Annotated image</h1>
+                <div>
+                    Here are the identifications provided by the AI. Each identification is marked within the original image and it is associated with a parasite name and probability of accuracy. 
+				</div>
+            </div>
+        </nav>
       <div class="image-container">
       	{% if img_uri %}
       	<img id="annotated-image"  src="{{ img_uri }}">
