@@ -22,20 +22,20 @@ def launch_clustering():
     photographs_valid = Identification.objects.values('photograph')\
         .annotate(num_photos=Count('photograph'))\
         .filter(num_photos__gte=number_indentifications_per_image)
-    print(photographs_valid)
+    # print(photographs_valid)
     # Get Querysets with the all the identifications per image
     for photograph_valid in photographs_valid:
         identifications_per_image = Identification.objects.filter(photograph=photograph_valid['photograph']).values('coordinateX', 'coordinateY', 'width', 'height', 'parasite')
         identifications_grouped.append(identifications_per_image)
-    print(identifications_grouped)
+    # print(identifications_grouped)
     for index, identification_grouped in enumerate(identifications_grouped):
         photograph_id = photographs_valid[index]['photograph']
-        print("El ID de la imagen procesada es " + str(photograph_id))
-        print("Lo que se le pasa es " + str(identification_grouped))
+        # print("El ID de la imagen procesada es " + str(photograph_id))
+        # print("Lo que se le pasa es " + str(identification_grouped))
         regions_of_interest_image = get_clusters_per_image(identification_grouped)
-        print("Lo que recibe es"  + str(regions_of_interest_image))
+        # print("Lo que recibe es"  + str(regions_of_interest_image))
         for region_of_interest_image in regions_of_interest_image:
-            print(region_of_interest_image[4])
+            # print(region_of_interest_image[4])
             region = Region(coordinateX=region_of_interest_image[0],
                             coordinateY=region_of_interest_image[1],
                             width=region_of_interest_image[2],
@@ -44,3 +44,4 @@ def launch_clustering():
                             parasite=retrieveParasite(region_of_interest_image[4])
                             )
             region.save()
+    print("Clusters calculated and saved to DB")
