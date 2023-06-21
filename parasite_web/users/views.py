@@ -69,11 +69,12 @@ def verifyLink(request, uidb64, token, action):
     try: 
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+        token_check = account_activation_token.check_token(user, token)
     except: 
         user = None
     
     # The user was found in the DB and the token is correct
-    if user is not None and account_activation_token.check_token(user, token):
+    if user is not None and token_check:
         # Activate account of the user
         if action == "Activate":
             user.is_active = True
