@@ -9,3 +9,4 @@ celery redis
 grpcio
 tensorflow
 tensorflow-serving-api
+python-dotenv
