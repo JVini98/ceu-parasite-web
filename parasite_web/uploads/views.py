@@ -5,6 +5,7 @@ import numpy as np
 from django.core.checks import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.conf import settings
 
 from PIL import Image
 from PIL import ImageColor
@@ -155,49 +156,47 @@ def map_classes(classes):
 
 
 def annotate_parasites(parasite_img):
-    # TODO: to be modified to talk with the AI
-
-    # matplotlib.use('TkAgg')
-
-    SERVER = '161.156.82.239:8500'
-
     parasite_img_np = np.array(parasite_img)
+    if settings.DEBUG:
+        # Just crosses the image to imatate AI's annotation
+        annotated_img_np = np.copy(parasite_img_np)
+        annotated_img = Image.fromarray(annotated_img_np)
+        img_drawer = ImageDraw.Draw(annotated_img)
+        img_drawer.line((0, 0) + annotated_img.size, fill=128, width=28)
+        img_drawer.line(
+            (0, annotated_img.size[1], annotated_img.size[0], 0), fill=128, width=28
+        )
+        # Should return an array to imitate AI's behaviour
+        return np.asarray(annotated_img)
+    else:
+        request = PredictRequest()
+        request.model_spec.name = "saved_model"
+        request.model_spec.signature_name = "serving_default"
+        request.inputs['input_tensor'].CopyFrom(
+            tf.make_tensor_proto(parasite_img_np[np.newaxis, :, :, :]))
 
-    request = PredictRequest()
-    request.model_spec.name = "saved_model"
-    request.model_spec.signature_name = "serving_default"
-    request.inputs['input_tensor'].CopyFrom(
-        tf.make_tensor_proto(parasite_img_np[np.newaxis, :, :, :]))
+        channel = grpc.insecure_channel(
+            settings.AI_SERVER,
+            options=[('grpc.max_send_message_length', -1),
+                     ('grpc.max_receive_message_length', -1)]
+        )
+        predict_service = prediction_service_pb2_grpc.PredictionServiceStub(
+            channel)
+        response = predict_service.Predict(request, timeout=60)
 
-    channel = grpc.insecure_channel(
-        SERVER,
-        options=[('grpc.max_send_message_length', -1),
-                 ('grpc.max_receive_message_length', -1)]
-    )
-    predict_service = prediction_service_pb2_grpc.PredictionServiceStub(
-        channel)
-    response = predict_service.Predict(request, timeout=60)
+        num_detections = int(tf.make_ndarray(
+            response.outputs["num_detections"])[0])
+        output_dict = {
+            'detection_boxes': tf.make_ndarray(response.outputs["detection_boxes"]),
+            'detection_classes': tf.make_ndarray(response.outputs["detection_classes"]).astype('int64'),
+            'detection_scores': tf.make_ndarray(response.outputs["detection_scores"])
+        }
+        output_dict = {key: value[0, :num_detections]
+                       for key, value in output_dict.items()}
+        output_dict['num_detections'] = num_detections
 
-    num_detections = int(tf.make_ndarray(
-        response.outputs["num_detections"])[0])
-    output_dict = {
-        'detection_boxes': tf.make_ndarray(response.outputs["detection_boxes"]),
-        'detection_classes': tf.make_ndarray(response.outputs["detection_classes"]).astype('int64'),
-        'detection_scores': tf.make_ndarray(response.outputs["detection_scores"])
-    }
-    output_dict = {key: value[0, :num_detections]
-                   for key, value in output_dict.items()}
-    output_dict['num_detections'] = num_detections
+        annotated_img_np = draw_boxes(parasite_img_np, output_dict['detection_boxes'], map_classes(
+            output_dict['detection_classes']), output_dict['detection_scores'])
+        return annotated_img_np
 
-    annotated_img_np = draw_boxes(parasite_img_np, output_dict['detection_boxes'], map_classes(
-        output_dict['detection_classes']), output_dict['detection_scores'])
 
-    annotated_img = Image.fromarray(annotated_img_np)
-
-    img_drawer = ImageDraw.Draw(annotated_img)
-    img_drawer.line((0, 0) + annotated_img.size, fill=128)
-    img_drawer.line(
-        (0, annotated_img.size[1], annotated_img.size[0], 0), fill=128
-    )
-    # Should return an array to imitate AI's behaviour
-    return np.asarray(annotated_img)
