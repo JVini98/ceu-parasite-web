@@ -1,6 +1,5 @@
 .idea
 **__pycache__/
-**/migrations/
 **/media/images/*
 **/parasite_web/celerybeat-schedule.*
 **/.env
