@@ -1,7 +1,5 @@
 import numpy as np
 import scipy
-import torch
-from torchvision import ops
 from sklearn.cluster import DBSCAN
 
 # image = [top-leftx, top-lefty, width, height]
