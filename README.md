@@ -1,20 +1,21 @@
 # CEU Parasite Web 
-Web para la detección automática de parásitos en fotografías de muestras fecales 
-y la anotación manual de las mismas.
+Aplicación web para la detección automática de parásitos en fotografías de muestras fecales y la anotación manual de las mismas.
+
+## Versión desplegada
 
 La aplicación se encuentra disponible en https://parasites.app/.
 
-## Docker
-Para ejecutar la aplicación en local, se puede utilizar Docker y Docker compose. 
-En esta versión en local la detección de parásitos no está disponible, ya que el 
-servidor de IA no es accesible desde IPs arbitrarias y no forma parte de este TFG.
-En su lugar, la detección de parásitos se sustituye por una modificación de la imagen 
-original (se "tacha" con una X) para simular la modificación de la imagen origen.
+## Versión local (Docker)
+Para ejecutar la aplicación en local, debe utilizar `Docker` y `Docker compose`.  
 
-Para usar Docker son necesarios dos pasos, existiendo también un tercer paso opcional.
+En el caso de que no tenga instalado `Docker compose`, siga los pasos indicados para su sistema operativo: https://docs.docker.com/compose/install/  
 
-1. En primer lugar se debe crear un fichero `.env` en la raíz del proyecto 
-con el siguiente formato:
+En esta versión local, la detección de parásitos no está disponible, correspondiente a la sección `Uploads` de la aplicación, ya que el servidor de inteligencia artificial no es accesible desde IPs arbitrarias. Sin embargo, esta no forma parte del alcance de este trabajo fin de grado.
+Por tanto, la detección de parásitos se ha sustituido por una modificación de la imagen original (se "tacha" con una X) para simular la modificación de la imagen origen.
+
+Para usar `Docker` es necesario seguir los dos primeros pasos, existiendo un tercer paso opcional.
+
+1. En primer lugar se debe crear un fichero `.env` en la raíz del proyecto con el siguiente formato:
 
 ```bash
 SECRET_KEY='doge-wow-such-insecure-much-scary'
@@ -40,15 +41,11 @@ CELERY_BROKER_URL='redis:/celery:6379/0'
 CELERY_RESULT_BACKEND='redis:/celery:6379/0'
 ```
 
-Las líneas marcadas con `<-----------` deben ser configuradas con una cuenta de 
-gmail para permitir el envío de correos electrónicos para el registro de usuarios. 
-Este paso es opcional y se detalla en la siguiente subsección, si bien sin él 
-el registro de usuarios no funcionará. Para poder usar la aplicación es por tanto
-necesario registrar un usuario en la base de datos. 
+Las líneas marcadas con `<-----------` deben ser configuradas con una cuenta de `Gmail` para permitir el envío de correos electrónicos durante el registro y la sustitución de contraseñas olvidadas de los usuarios. 
+Este paso es opcional y se detalla en la subsección 3.
+Si no se sigue este paso, el registro y la sustitución de contraseñas olvidadas de los de usuarios no funcionará. Por lo tanto, para poder utilizar la aplicación es necesario registrar un usuario en la base de datos. 
 
-2. Para registrar usuarios, bastaría con incluir el siguiente fichero 
-`users.json` en la carpeta `parasite_web/users/fixtures/`. Docker compose se encarga 
-de registrar al usuario `user@user.com` con contraseña `parasites`.
+2. Para registrar usuarios, bastaría con incluir el siguiente fichero `users.json` en la carpeta `parasite_web/users/fixtures/`. `Docker compose` se encarga de registrar al usuario `user@user.com` con contraseña `parasites`.
 
 ```json
 [
@@ -66,21 +63,18 @@ de registrar al usuario `user@user.com` con contraseña `parasites`.
 ]
 ```
 
-3. [Opcional] Si se desea habilitar el registro de usuarios, deben seguirse los 
-siguientes pasos para habilitar el envío de correos a los usuarios. En este caso, 
-se ha utilizado el servidor SMTP de Gmail por lo que debe usarse una cuenta de gmail:
+3. [Opcional] Si se desea habilitar el registro y la sustitución de las contraseñas olvidadas de los usuarios, deben seguirse los siguientes pasos para habilitar el envío de correos a los usuarios. En este caso, se ha utilizado el `servidor SMTP de Gmail` por lo que debe usarse una cuenta de `Gmail`:
 
-* Abrir Gmail desde el navegador. Usar la dirección de correo en `EMAIL_HOST_USER`.
+* Abrir `Gmail` desde el navegador. Escribir la dirección de correo en el fichero `.env`, variable `EMAIL_HOST_USER`.
 * Pulsar en el icono de la cuenta y pulsar el botón "Gestionar tu cuenta de Google".
 * En el menú, seleccionar el apartado de “Seguridad”. 
-* Activar la verificación en dos pasos en el caso de que no esté activa. 
-Es necesario activarla para poder realizar el siguiente paso.  
+* Activar la verificación en dos pasos en el caso de que no esté activa. Es necesario activarla para poder realizar el siguiente paso.  
 * En el apartado de "Contraseñas de aplicaciones", seleccionar "Otra (nombre personalizado)"
 en el desplegable de "Seleccionar aplicación" y asignarle un nombre (ejemplo: Django Email).  
 * Escribir la contraseña que se ha generado para la aplicación en el fichero `.env`, 
 variable `EMAIL_HOST_PASSWORD`.
 
-Tras realizar la configuración, es posible ejecutar la aplicación con Docker compose:
+Tras realizar la configuración, es posible ejecutar la aplicación con `Docker compose`:
 ```bash 
 docker compose up --build
 ```
