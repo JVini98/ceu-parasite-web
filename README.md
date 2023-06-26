@@ -76,6 +76,6 @@ variable `EMAIL_HOST_PASSWORD`.
 
 Tras realizar la configuración, es posible ejecutar la aplicación con `Docker compose`:
 ```bash 
-docker compose up --build
+sudo docker compose up --build
 ```
 Se puede usar la aplicación en `127.0.0.1:8000`.
