@@ -1,0 +1,51 @@
+version: "3"
+services:
+  db:
+    image: mariadb:latest
+    environment:
+      - MYSQL_DATABASE=parasites
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_ROOT_PASSWORD=django
+    ports:
+      - "3302:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb -u django -pdjango -e 'SELECT 1;'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  web:
+    build: .
+    command: sh -c "python parasite_web/manage.py migrate && python parasite_web/manage.py loaddata parasites.json && python parasite_web/manage.py loaddata users.json  && python parasite_web/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_DATABASE=parasites
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_ROOT_PASSWORD=django
+    depends_on:
+      db:
+        condition: service_healthy
+  redis:
+     image: redis:7-alpine
+  celery:
+    build: .
+    command: sh -c "cd parasite_web && celery -A parasite_web worker -l info"
+    volumes:
+      - .:/code
+    ports:
+      - 6379
+    depends_on:
+      - redis
+  celery_beat:
+    build: .
+    command: sh -c "cd parasite_web && celery -A parasite_web beat -l info"
+    volumes:
+      - .:/code
+    ports:
+      - 6379
+    depends_on:
+      - redis
