@@ -6,9 +6,11 @@ Aplicación web para la detección automática de parásitos en fotografías de 
 La aplicación se encuentra disponible en https://parasites.app/.
 
 ## Versión local (Docker)
-Para ejecutar la aplicación en local, debe utilizar `Docker` y `Docker compose`.  
+Para ejecutar la aplicación en local, debe tener instaldo `Docker Engine` y `Docker Compose`.  
 
-En el caso de que no tenga instalado `Docker compose`, siga los pasos indicados para su sistema operativo: https://docs.docker.com/compose/install/  
+En el caso de que no tenga instalado `Docker Engine`, siga los pasos indicados para su sistema operativo: https://docs.docker.com/engine/install/  
+
+En el caso de que no tenga instalado `Docker Compose`, siga los pasos indicados para su sistema operativo: https://docs.docker.com/compose/install/  
 
 En esta versión local, la detección de parásitos no está disponible, correspondiente a la sección `Uploads` de la aplicación, ya que el servidor de inteligencia artificial no es accesible desde IPs arbitrarias. Sin embargo, esta no forma parte del alcance de este trabajo fin de grado.
 Por tanto, la detección de parásitos se ha sustituido por una modificación de la imagen original (se "tacha" con una X) para simular la modificación de la imagen origen.
