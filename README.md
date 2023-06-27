@@ -39,8 +39,8 @@ EMAIL_PORT=587
 PASSWORD_RESET_TIMEOUT=1800
 
 # Celery
-CELERY_BROKER_URL='redis:/celery:6379/0'
-CELERY_RESULT_BACKEND='redis:/celery:6379/0'
+CELERY_BROKER_URL='redis::/redis:6379/0'
+CELERY_RESULT_BACKEND='redis://redis:6379/0'
 ```
 
 Las líneas marcadas con `<-----------` deben ser configuradas con una cuenta de `Gmail` para permitir el envío de correos electrónicos durante el registro y la sustitución de contraseñas olvidadas de los usuarios. 
